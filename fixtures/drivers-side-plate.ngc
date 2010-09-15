@@ -1,0 +1,162 @@
+
+;
+; This program mills the "Driver's Side Plate", which is a fixture for
+; milling an AR-15 receiver from a 0% casting.
+;
+; It is based on the information in chapter 14 of "Machining the AR15
+; Lower Receiver Forging" by Ray Brandes, available from from Ray-Vin.com.
+;
+; The work piece is a 6.000" x 2.500" x 0.500" Al plate, with the XY origin
+; at the top left corner and the Z origin at the upper surface of the
+; plate.  The workpiece thus extends to X=6.000, Y=-2.500, and Z=-0.500.
+;
+; The work piece is mounted in a vise with at least 0.313" sticking up
+; above the jaws.
+;
+; T1 is a .250" diameter 4-flute end mill
+;
+
+
+
+
+;
+; control parameters
+;
+
+#<CutterDiameter> = 0.250
+#<CutterRadius> = [ #<CutterDiameter> / 2 ]
+
+#<FinishAllowance> = 0.010
+#<MaxDOC> = #<CutterRadius>
+
+
+; YTopStaging and YBottomStaging are just more than one cutter radius off the work
+; YOffTheTop and YOffTheBottom are a bit outside the Staging 
+
+#<YOffTheTop> = 1.000
+#<YTopStaging> = 0.350
+
+#<YOffTheBottom> = -3.500
+#<YBottomStaging> = -2.850
+
+
+#<ZSlotBottom> = -.313
+
+; FIXME: gotta figure out speeds & feeds!
+#<Speed> = 2000
+#<Feed> = 5
+
+#<SafeZ> = .1
+
+
+g20 (inch)
+g90 (absolute)
+g40 (disable cutter comp)
+g90.1 (arc centers are absolute)
+
+
+
+
+; fetch the .250 end mill
+m6 t1 g43
+
+m3 s#<Speed>
+f#<Feed>
+; FIXME: a pause & a message here would be handy
+
+g0 z#<SafeZ>
+
+
+
+; 
+; start with the large thinned area of the plate
+;
+
+o100 if [1]
+
+    #<StartX> = 6.000
+    #<StartY> = [0 + #<CutterDiameter>]
+
+    #<EndX> = [ 2.750 + #<CutterRadius> ]
+    #<EndY> = [-2.500 - #<CutterDiameter>]
+
+    #<PocketZ> = -0.106
+
+    o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [#<FinishAllowance>]
+
+o100 endif
+
+
+
+
+;
+; cut the rightmost slot
+; we're starting off the bottom, well left of the slot
+;
+
+o200 if [1]
+
+    #<StartX> = [ 3.750 + #<CutterRadius> ]
+    #<StartY> = [-2.500 - #<CutterDiameter>]
+
+    #<EndX> = [ 4.500 - #<CutterRadius> ]
+    #<EndY> = [ 0 + #<CutterDiameter>]
+
+    #<PocketZ> = -0.313
+
+    o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [#<FinishAllowance>]
+
+o200 endif
+
+
+
+
+;
+; cut the small slot in the top/middle
+;
+
+o300 if [1]
+
+    #<StartX> = [ 2.750 + #<CutterRadius> ]
+    #<StartY> = [ 0 + #<CutterDiameter>]
+
+    #<EndX> = [ 3.438 ]
+    #<EndY> = [ -0.500 ]
+
+    #<PocketZ> = -0.313
+
+    o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [#<FinishAllowance>]
+
+o300 endif
+
+
+
+
+;
+; cut the slot on the left
+;
+
+o400 if [1]
+
+    #<StartX> = [ 0 - #<CutterDiameter> ]
+    #<StartY> = [ -0.594 + 0.188 - #<CutterRadius> ]
+
+    #<EndX> = [ 1.375 + 0.188 - #<CutterRadius> ]
+    #<EndY> = [ -0.594 - 0.188 + #<CutterRadius> ]
+
+    #<PocketZ> = -0.125
+
+    o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [#<FinishAllowance>]
+
+o400 endif
+
+
+
+
+; 
+; done!
+;
+
+o<presentation-position-0> call
+m2
+

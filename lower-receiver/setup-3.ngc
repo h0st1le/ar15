@@ -1,0 +1,260 @@
+
+;
+; This program does part of the milling of an AR-15 lower receiver.
+;
+; It is based on the information in chapter 3 of "Machining the AR15 Lower
+; Receiver Forging" by Ray Brandes, available from from Ray-Vin.com.
+;
+; In this setup we'll drill and ream the holes and mill the pockets on the
+; driver's side.
+;
+; The receiver forging is held in the vise, clamped on the deck and the
+; trigger guard bosses, with the driver's side up.  The passenger side is
+; up off the vise so we can drill and ream through-holes without nicking
+; the vise.  The surface of the driver's side that has the two safety stop
+; bumps is just above the level of the jaws, so we can mill all the way out
+; to the edge of the casting at that level.
+;
+; The butt face is on the right (+X), at X=7.500, deck is on the +Y side at
+; 0.250.
+;
+; The operations for this setup consist of 8 holes [spot-drilled, drilled,
+; and some reamed] and 4 milling operations [slots & pockets].
+;
+; One of the holes is extra troublesome - it needs a spot face for the
+; drill to start on, and it's at the bottom of one of the milled slots.
+; The part geometry here imposes an order on the operations: spot-face,
+; make the hole, then mill the slot.
+;
+; The rest of the ops are independent of each other, so they can happen in
+; any convenient order.  The holes should be made from smallest to biggest,
+; so we can open up the bigger holes gradually with bigger and bigger
+; drills.
+;
+; The sequence of operations are thus:
+;
+;     1.  spot-face for the bolt release hole [5/32 or smaller center
+;         cutting end mill]
+;
+;     2.  spot-drill 8 holes [spot drill]
+;
+;     3.  drill all 8 holes .125 [finishes: rear trigger guard hole] [1/8
+;         drill]
+;
+;     4.  drill all 7 remaining holes with a .156 pre-drill [.156
+;         pre-drill]
+;
+;     5.  ream trigger hole, hammer hole, and bolt release spring hole to
+;         5/32 [finishes: trigger hole, hammer hole, bolt release spring
+;         hole] [5/32 reamer]
+;
+;     6.  drill all 4 remaining holes with a #5 drill [finishes: mag
+;         release hole] [#5 drill]
+;
+;     7.  drill all 3 remaining holes with a D drill [D drill]
+;
+;     8.  ream pivot pin hole and hammer pin hole with a .251 reamer
+;         [finishes pivot pin hole and hammer pin hole] [.251 reamer]
+;
+;     9.  drill safety selector hole with a .376 pre-drill [.376 pre-drill]
+;
+;     10. ream safety selector hole to .376 [finishes: safety selector
+;         hole] [.376 reamer]
+;
+;     11. mill bolt release slot [5/32 or 1/8 end mill]
+;
+;     12. mill safety stops [1/4 end mill or so]
+;
+;     13. mill mag release slot [1/4 end mill]
+;
+;     14. mill pistol grip pocket [1/2 end mill]
+;
+;
+; Tools used:
+; 
+;     drills & reamers:
+;
+;         spot drill
+;
+;         D drill (pre-drill for 0.251 reamer)
+;         .251 reamer
+;
+;         FIXME: pre-drill for .376 reamer
+;         .376 reamer
+;
+;         FIXME: pre-drill for .156 (5/32) reamer
+;         .156 (5/32) reamer
+;
+;         .125 drill
+;
+;         #5 drill (0.2055" diameter)
+;
+;     end mills:
+;
+;         5/32 end mill (0.156) (or a 1/8, .125, might work, must be center cutting)
+;         1/4 end mill (0.250)
+;         1/2 end mill (0.500)
+;
+
+
+#<SafeZ> = 2
+
+#<DoSpotFaceBoltReleaseSpringHole> = 1
+    #<SpotFaceBoltReleaseSpringHoleToolNumber> = 1 ; FIXME: 1/8" 2-flute center-cutting end-mill
+    #<SpotFaceSpeed> = 2500
+    #<SpotFaceFeed> = 7
+
+
+
+
+;
+; 8 hole locations
+;
+
+; .251 reamed
+#<PivotPinX> = 0.000
+#<PivotPinY> = -0.000
+
+; .251 reamed
+#<TakedownPinX> = 6.375
+#<TakedownPinY> = -0.000
+
+; .376 reamed
+#<SafetySelectorX> = 5.572
+#<SafetySelectorY> = -0.464
+
+; 5/32 reamed (.156)
+#<TriggerHoleX> = 4.447
+#<TriggerHoleY> = -0.689
+
+; 5/32 reamed (.156)
+#<HammerHoleX> = 3.604
+#<HammerHoleY> = -0.375
+
+; .125 drilled
+; FIXME: the location of this hole differs in Ray's book vs the blueprint
+#<RearTriggerGuardHoleX> = 4.8765  ; Ray says 4.875
+#<RearTriggerGuardHoleY> = -2.180  ; Ray says 2.188
+
+; #5 drilled (.2055)
+; FIXME: the location of this hole differs in Ray's book vs the blueprint
+#<MagReleaseHoleX> = 3.084    ; Ray says 3.079
+#<MagReleaseHoleY> = -0.5625  ; Ray says -0.563
+
+; 5/32 drilled (.156, not a through hole!)
+#<BoltReleaseSpringHoleX> = 3.079
+#<BoltReleaseSpringHoleY> = -0.194
+
+
+
+
+;
+; the driver's side portion of the bolt release groove
+; milled with a 5/32 end mill, slotted out to 0.167 +- .010
+; In the blueprint, Section C-C specifies the lower Y dimension as .630-.250=.380
+; FIXME: The lower Y of this slot is different in Ray's book vs the blueprint
+; FIXME: also the width of the slot
+;
+
+#<BoltReleaseGrooveCutterDiameter> = [5 / 32]
+#<BoltReleaseGrooveCutterRadius> = [#<BoltReleaseGrooveCutterDiameter> / 2]
+
+#<BoltReleaseGrooveWidth> = 0.167
+#<BoltReleaseGrooveLeftX> =  [ #<BoltReleaseSpringHoleX> - [ #<BoltReleaseGrooveWidth> / 2 ]]
+#<BoltReleaseGrooveRightX> = [ #<BoltReleaseSpringHoleX> + [ #<BoltReleaseGrooveWidth> / 2 ]]
+#<BoltReleaseGrooveLowerY> = -.380  ; FIXME: Ray says [-.279 - 5/64] = -.357125...
+#<BoltReleaseGrooveUpperY> = [ 0 + #<BoltReleaseGrooveCutterRadius> + 0.010 ]
+
+
+
+
+;
+; the safety (aka fire selector) stops
+; cut with whatever end mill is handy (Ray uses a 1/4)
+;
+
+#<SafetyStopCutterDiameter> = [1 / 4]
+#<SafetyStopCutterRadius> = [#<SafetyStopCutterDiameter> / 2]
+
+; FIXME: can't find the source of SafetyStopY in the blueprint
+#<SafetyStopY> = [ -0.464 + [ 1/8 ]]
+
+; FIXME: can't find these dimensions anywhere...
+#<SafetyStopStartX> = [ 5.572 - 1 ]
+#<SafetyStopEndX> = [ 5.572 + 1 ]
+
+
+
+
+;
+; the mag release slot
+; plunge and cut with a 1/4" cutter, just move it in a straight line?
+;
+
+#<MagReleaseSlotCutterDiameter> = [1 / 4]
+#<MagReleaseSlotCutterRadius> = [#<MagReleaseSlotCutterDiameter> / 2]
+
+#<MagReleaseSlotY> = -0.5625     ; FIXME: Ray calls this -0.563
+
+#<MagReleaseSlotLeftX> = 1.943   ; FIXME: Ray calls this 1.938
+#<MagReleaseSlotRightX> = 3.202  ; FIXME: Ray calls this 3.197
+
+
+
+
+;
+; the pistol grip pocket
+; NOTE: don't crash!
+; NOTE: the Z for this requires a measurement from the forging...
+;
+
+#<PistolGripPocketCutterDiameter> = [1 / 4]
+#<PistolGripPocketCutterRadius> = [#<PistolGripPocketCutterDiameter> / 2]
+
+#<PistolGripPocketTopY> = -1.066
+#<PistolGripPocketLeftX> = 5.200  ; FIXME: Ray calls this 5.203
+
+
+
+
+o<init-0> call
+
+
+
+
+o100 if [ #<DoSpotFaceBoltReleaseSpringHole> EQ 1 ] then
+
+    ; fetch the spot-facing end mill
+    m6 t#<SpotFaceBoltReleaseSpringHoleToolNumber> g43
+
+    g0 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY>
+
+    m3 s#<SpotFaceSpeed>
+    f#<SpotFaceFeed>
+    (MSG, Set spindle speed to 2500 rpm)
+    m1
+
+; Arg 1: X coordinate of center of hole
+; Arg 2: Y coordinate of center of hole
+; Arg 3: diameter of hole
+; Arg 4: Z coordinate at top of workpiece (start cutting here)
+; Arg 5: Z increment (depth per revolution)
+; Arg 6: Z coordinate at bottom of hole
+; Arg 7: Retract Z level
+
+    #<StartZ> = 0
+    #<BottomZ> = -0.250
+    o<helix-hole-2> call [#<BoltReleaseSpringHoleX>] [#<BoltReleaseSpringHoleY>] [#<BoltReleaseGrooveWidth>] [#<StartZ>] [0.050] [#<BottomZ>] [#<SafeZ>]
+
+o100 endif
+
+
+
+
+;
+; done!
+;
+
+;o<presentation-position-0> call
+m2
+

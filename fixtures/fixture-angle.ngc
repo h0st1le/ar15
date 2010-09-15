@@ -1,0 +1,81 @@
+
+;
+; This program mills the angled bottom of the fixture plates for the AR-15
+; lower receiver, described in chapter 14 of "Machining the AR15 Lower
+; Receiver Forging" by Ray Brandes, available from from Ray-Vin.com.
+;
+
+; set the work piece at a 10deg angle in the vice
+; touched off to corner 
+; cutter's wide enough to cut the whole .5" thickness in one pass
+; Y never moves
+; Z=0 at the desired level, Z=0.677 at the top of the corner
+; X=0 off the left of the final cut, X=5 off the right
+
+
+g20 (inch)
+g90 (absolute)
+g40 (disable cutter comp)
+g90.1 (arc centers are absolute)
+
+
+#<SafeZ> = 1
+
+#<LeftX> = 0
+#<RightX> = 5
+
+#<StartZ> = 0.677
+#<FinalZ> = 0.000
+#<DOC> = 0.030
+
+#<FinishAllowance> = 0.005
+
+
+
+#<CurrentZ> = #<StartZ>
+
+
+g0 z#<SafeZ>
+g0 x0
+
+m3 s2000
+f 7
+
+g1 z#<CurrentZ>
+
+o100 while [ #<CurrentZ> - [ 2 * #<DOC> ] GT #<FinalZ> ]
+    #<CurrentZ> = [ #<CurrentZ> - #<DOC> ]
+    g1 z#<CurrentZ>
+    g1 x#<RightX>
+
+    #<CurrentZ> = [ #<CurrentZ> - #<DOC> ]
+    g1 z#<CurrentZ>
+    g1 x#<LeftX>
+o100 endwhile
+
+#<RemainingZ> = [ #<CurrentZ> - #<FinalZ> ]
+
+o200 if [ #<RemainingZ> GT #<FinishAllowance> ]
+    #<DOC> = [[ #<RemainingZ> - #<FinishAllowance> ] / 2]
+
+    #<CurrentZ> = [ #<CurrentZ> - #<DOC> ]
+    g1 z#<CurrentZ>
+    g1 x#<RightX>
+
+    #<CurrentZ> = [ #<CurrentZ> - #<DOC> ]
+    g1 z#<CurrentZ>
+    g1 x#<LeftX>
+o200 endif
+
+g1 z#<FinalZ>
+g1 x#<RightX>
+
+
+g0 z#<SafeZ>
+m5
+
+o<presentation-position-0> call
+
+m2
+
+

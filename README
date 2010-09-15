@@ -1,0 +1,26 @@
+
+This repo contains gcode and notes for machining an AR-15 lower receiver
+from a 0% casting.
+
+
+Refer to Ray's excellent free book for setups & manual procedures (this
+repo is all about CNC, so some things are different):
+
+    <http://www.ray-vin.com/frtech.htm>
+
+
+This project uses some subroutines from the lib-gcode repo:
+
+    <git://github.com/SebKuzminsky/lib-gcode.git>
+
+
+Castings are available from DSA for < $30:
+
+    <http://www.dsarms.com/AR15-Lower-Receiver-7075-T6-Alloy-Forging-Military-Spec---1001/productinfo/1001/>
+
+
+For more info, see:
+
+    <http://garagegunsmithing.com/index.php?option=com_jfusion&Itemid=54&jfile=viewtopic.php&f=22&t=371>
+
+

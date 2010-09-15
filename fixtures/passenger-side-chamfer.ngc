@@ -1,0 +1,101 @@
+
+;
+; This program mills a chamfer on all accessible edges of the "Passenger's
+; Side Plate", which is a fixture for milling an AR-15 receiver from a 0%
+; casting.
+;
+; It is based on the information in chapter 14 of "Machining the AR15 Lower
+; Receiver Forging" by Ray Brandes, available from from Ray-Vin.com.
+;
+; This program wants to run on a part that has already had the
+; passenger-side-plate.ngc program run on it, and that has had the 10
+; degree cut on the -Y side done.
+;
+; The work piece is a 6.000" x 2.500" x 0.500" Al plate, with the XY origin
+; at the top right corner and the Z origin at the upper surface of the
+; plate.  The workpiece thus extends to X=-6.000, Y=-2.500, and Z=-0.500.
+;
+; The work piece is mounted in a vise with at least 0.313" sticking up
+; above the jaws.
+;
+; T4 is a .250" diameter 2-flute 90 degree drill/mill
+;
+
+
+;
+; Chamfer depth is how far "below grade" the tip of the drill-mill is.
+; Chamfer offset is how far "off the wall" the tip of the drill-mill is.
+; Since the chamfering bit has a 90 degree point, the linear amount of
+; material removed, in the XY plane at Z, is:
+;
+;     [ #<ChamferDepth> - #<ChamferOffset> ]
+;
+
+#<ChamferDepth> = 0.020
+#<ChamferOffset> = 0.010
+
+#<DrillMillFeed> = 3
+
+#<SafeZ> = .5
+
+
+g20 (inch)
+g90 (absolute)
+g40 (disable cutter comp)
+g90.1 (arc centers are absolute)
+
+
+
+
+
+
+
+; fetch the 1/4" drill-mill
+m6 t4 g43
+
+; ask the user to set speed
+; FIXME: it'd be cool to have a manual speed changer, analogous to the
+; manual tool changer
+m3 s3000
+(MSG, Set spindle speed to 3000 rpm)
+m1
+
+f#<DrillMillFeed>
+
+g0 z#<SafeZ>
+
+
+;
+; chamfer around the high part on the right
+;
+
+o100 if [1]
+
+    ; this is the corner between the vertical wall and the 10 degree angled cut
+    #<CornerX> = -2.750
+    #<CornerY> = [ -2.500 + [ [2.750-2.101] * tan[10] ]]
+
+    g0 x-2.750 y[ 0.000 + #<ChamferOffset> ]
+
+    g1 z[  0.000 - #<ChamferDepth> ]
+
+    g1 x[  0.000 + #<ChamferOffset> ]
+    g1 y[ -2.500 - #<ChamferOffset> ]
+    g1 x[ -2.101 - [ #<ChamferOffset> * sin[10] ] ]
+    g1 x[ #<CornerX> - #<ChamferOffset> ] y[ #<CornerY> - [#<ChamferOffset> * [ 1/cos[10] - tan[10]]] ]
+    g1 y[ 0 + #<ChamferOffset> ]
+
+    g0 z#<SafeZ>
+
+o100 endif
+
+
+
+
+; 
+; done!
+;
+
+o<presentation-position-0> call
+m2
+

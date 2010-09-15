@@ -1,0 +1,163 @@
+
+;
+; This program mills the "Passenger's Side Plate", which is a fixture for
+; milling an AR-15 receiver from a 0% casting.
+;
+;
+; It is based on the information in chapter 14 of "Machining the AR15 Lower
+; Receiver Forging" by Ray Brandes, available from from Ray-Vin.com.
+;
+; The work piece is a 6.000" x 2.500" x 0.500" Al plate, with the XY origin
+; at the top right corner and the Z origin at the upper surface of the
+; plate.  The workpiece thus extends to X=-6.000, Y=-2.500, and Z=-0.500.
+;
+; The work piece is mounted in a vise with at least 0.313" sticking up
+; above the jaws.
+;
+
+
+;
+; control parameters
+;
+
+#<CutterDiameter> = [ 3/8 ]
+#<CutterRadius> = [ #<CutterDiameter> / 2 ]
+
+#<FinishAllowance> = 0.010
+#<MaxDOC> = #<CutterRadius>
+
+; FIXME: gotta figure out speeds & feeds!
+#<Feed> = 5
+
+#<SafeZ> = .1
+
+
+g20 (inch)
+g90 (absolute)
+g40 (disable cutter comp)
+g90.1 (arc centers are absolute)
+
+
+
+
+; fetch the 3/8 end mill
+m6 t3 g43
+
+; ask the user to set speed
+; FIXME: it'd be cool to have a manual speed changer, analogous to the
+; manual tool changer
+m3 s2000
+(MSG, Set spindle speed to 2000 rpm)
+m1
+
+f#<Feed>
+
+g0 z#<SafeZ>
+
+
+
+
+; 
+; start with the large thinned area of the plate
+; Do this "pocket" without a finish allowance, and "manually" finish just
+; the one side of the pocket that needs it.
+;
+
+o100 if [1]
+
+    #<StartX> = -6.000
+    #<StartY> = [0 + #<CutterDiameter>]
+
+    #<EndX> = [ -2.750 - #<CutterRadius> - #<FinishAllowance> ]
+    #<EndY> = [-2.500 - #<CutterDiameter>]
+
+    #<PocketZ> = -0.106
+
+    o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [0]
+
+
+    ; finish just the right wall of the pocket with climb milling
+    g0 z#<SafeZ>
+    g0 x[-2.750 - #<CutterRadius>] y[ -2.500 - #<CutterDiameter> ]
+    g1 z#<PocketZ>
+    g1 y#<CutterDiameter>
+    g0 z#<SafeZ>
+
+o100 endif
+
+
+
+
+;
+; cut the top horizontal pocket
+;
+
+o200 if [1]
+
+    #<StartX> = -6.000
+
+    ; the .010 extra on StartY is just to get the cutter's contact patch
+    ; with the right side of the pocket definitely off the top of the work
+    #<StartY> = [ 0.000 + 0.010 ]
+
+    #<EndX> = [ -2.750 + .250 - #<CutterRadius> ]
+    #<EndY> = [ -0.500 + #<CutterRadius> ]
+
+    #<PocketZ> = -0.313
+
+    o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [#<FinishAllowance>]
+
+o200 endif
+
+
+
+
+;
+; cut the vertical pocket
+;
+
+o300 if [1]
+
+    #<StartX> = [ -3.875 + #<CutterRadius> ]
+    #<StartY> = 0
+
+    #<EndX> = [ -3.375 - #<CutterRadius> ]
+    #<EndY> = [ -1.500 - 0.250 + #<CutterRadius> ]
+
+    #<PocketZ> = -0.313
+
+    o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [#<FinishAllowance>]
+
+o300 endif
+
+
+
+
+;
+; cut the lower horizontal pocket
+;
+
+o400 if [1]
+
+    #<StartX> = [ -3.375 - #<CutterRadius> - 0.010 ]
+    #<StartY> = [ -1.000 - #<CutterRadius> ]
+
+    #<EndX> = [ -2.750 + 0.250 - #<CutterRadius> ]
+    #<EndY> = [ -1.500 + #<CutterRadius> ]
+
+    #<PocketZ> = -0.313
+
+    o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [#<FinishAllowance>]
+
+o400 endif
+
+
+
+
+; 
+; done!
+;
+
+o<presentation-position-0> call
+m2
+

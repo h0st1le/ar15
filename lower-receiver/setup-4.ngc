@@ -1,0 +1,122 @@
+
+;
+; This program does part of the milling of an AR-15 lower receiver.
+;
+; It is based on the information in chapter 4 of "Machining the AR15 Lower
+; Receiver Forging" by Ray Brandes, available from from Ray-Vin.com.
+;
+; In this setup we'll drill and ream the holes and mill the pockets on the
+; passenger's side.
+;
+; The receiver forging is held in the vise, clamped on the deck and the
+; trigger guard bosses, with the passenger's side up.  The driver's side is
+; up off the vise so we can drill and ream through-holes without nicking
+; the vise.
+;
+; The butt face is on the left (-X), at X=-7.500, deck is on the +Y side at
+; 0.250.
+;
+; Tools used:
+;
+; end mills:  (with cnc we might not need all of these)
+;
+;     7/16 2-flute (0.4375)
+;     3/8 2-flute (.375) (or bigger)
+;     5/16 (.3125)
+;     1/2" (.500)
+;
+; drills:
+;
+;     1/8"
+;     some random chamfering bit (drill-mill, center drill, etc)
+;     5/64"
+;
+
+FIXME: ok to here
+
+
+
+
+;
+; T6 is a .750" diameter 4-flute end mill
+;
+
+
+#<CutterDiameter> = 0.750
+
+#<DOC> = 0.015
+#<NumPasses> = 8
+
+#<FinishAllowance> = 0.005
+
+
+; FIXME: gotta figure out speeds & feeds!
+#<Speed> = 2000
+#<Feed> = 5
+
+#<ZCut> = 0
+
+#<SafeZ> = 2
+
+
+o<init-0> call
+
+
+
+
+; fetch the .750 end mill
+m6 t6 g43
+
+g0 z#<SafeZ>
+
+m3 s#<Speed>
+f#<Feed>
+(MSG, Set spindle speed to 2000 rpm)
+m1
+
+
+FIXME: ok to here
+
+#<Pass> = 1
+
+o100 do
+    o110 if [ #<Pass> LE #<NumPasses> ]
+        #<EffectiveCutterDiameter> = [ #<CutterDiameter> + [ 2 * [ #<FinishAllowance> + [ #<DOC> * [ #<NumPasses> - #<Pass> ]]]]]
+    o110 else
+        #<EffectiveCutterDiameter> = #<CutterDiameter>
+    o110 endif
+
+    g0 x1.500 y-1
+    /g41.1 d#<EffectiveCutterDiameter>
+    g0 x0.500 y-.250
+
+
+    ;
+    ; this is the final material contour
+    ;
+
+    g0 z#<ZCut>
+
+    g1 x[-7 + .750]
+    g3 x-7 y-1 i0 j-.750
+    g1 y-1.575
+    g1 x-7.5
+    g1 y1
+
+    g0 z#<SafeZ>
+
+    g40
+
+    #<Pass> = [ #<Pass> + 1 ]
+o100 while [ #<Pass> LE [ #<NumPasses> + 1 ]]
+
+
+
+
+;
+; done!
+;
+
+o<presentation-position-0> call
+m2
+

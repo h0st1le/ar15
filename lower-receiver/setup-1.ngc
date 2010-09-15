@@ -1,0 +1,106 @@
+
+;
+; This program does part of the milling of an AR-15 lower receiver.
+;
+; It is based on the information in chapter 2 of "Machining the AR15 Lower
+; Receiver Forging" by Ray Brandes, available from from Ray-Vin.com.
+;
+; The deck and the recoil buffer mount are finished.
+;
+; The receiver forging is clamped to the table using the passenger side
+; fixture plate.  The deck is parallel to the X axis.  The recoil buffer is
+; on the left [negative X direction], and the pivot pin hole [not yet
+; drilled] is on the right (positive X direction).
+;
+; The magazine catch boss is used for locating: the center of the boss is
+; X=-2.109, Y=0.563.  This places the pivot pin hole (not yet drilled) at
+; X=0, Y=0.
+;
+
+
+;
+; T6 is a .750" diameter 4-flute end mill
+;
+
+
+#<CutterDiameter> = 0.750
+
+#<DOC> = 0.015
+#<NumPasses> = 8
+
+#<FinishAllowance> = 0.005
+
+
+; FIXME: gotta figure out speeds & feeds!
+#<Speed> = 2000
+#<Feed> = 5
+
+#<ZCut> = 0
+;#<ZCut> = 0
+
+#<SafeZ> = 3.800
+
+
+g20   (inch)
+g17   (xy plane)
+g90   (absolute)
+g91.1 (arc centers are relative to arc starting point)
+g40   (disable cutter comp)
+
+
+
+
+; fetch the .750 end mill
+m6 t6 g43
+
+g0 z#<SafeZ>
+
+m3 s#<Speed>
+f#<Feed>
+(MSG, Set spindle speed to 2000 rpm)
+m1
+
+
+#<Pass> = 1
+
+o100 do
+    o110 if [ #<Pass> LE #<NumPasses> ]
+        #<EffectiveCutterDiameter> = [ #<CutterDiameter> + [ 2 * [ #<FinishAllowance> + [ #<DOC> * [ #<NumPasses> - #<Pass> ]]]]]
+    o110 else
+        #<EffectiveCutterDiameter> = #<CutterDiameter>
+    o110 endif
+
+    g0 x1.500 y-1
+    /g41.1 d#<EffectiveCutterDiameter>
+    g0 x0.500 y-.250
+
+
+    ;
+    ; this is the final material contour
+    ;
+
+    g0 z#<ZCut>
+
+    g1 x[-7 + .750]
+    g3 x-7 y-1 i0 j-.750
+    g1 y-1.575
+    g1 x-7.5
+    g1 y1
+
+    g0 z#<SafeZ>
+
+    g40
+
+    #<Pass> = [ #<Pass> + 1 ]
+o100 while [ #<Pass> LE [ #<NumPasses> + 1 ]]
+
+
+
+
+;
+; done!
+;
+
+o<presentation-position-0> call
+m2
+

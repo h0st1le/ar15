@@ -1,0 +1,37 @@
+
+;
+; This program face mills the fixture plates for the AR-15 lower receiver.
+;
+; The fixture plates are described in chapter 14 of "Machining the AR15
+; Lower Receiver Forging" by Ray Brandes, available from from Ray-Vin.com.
+;
+
+
+g20 (inch)
+g90 (absolute)
+g40 (disable cutter comp)
+g90.1 (arc centers are absolute)
+
+m3 s2000
+f 15
+
+
+
+#<StartX> = 0.000
+#<StartY> = 0
+
+#<EndX> = 6
+#<EndY> = -2.500
+
+#<PocketZ> = -0.005
+
+#<SafeZ> = .5
+#<MaxDOC> = .740
+#<FinishAllowance> = .010
+
+o<rectangular-pocket-0> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<PocketZ>] [#<SafeZ>] [#<MaxDOC>] [#<FinishAllowance>]
+
+
+
+m2
+
