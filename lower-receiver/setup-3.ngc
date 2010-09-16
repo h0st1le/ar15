@@ -105,6 +105,12 @@
     #<SpotFaceFeed> = 7
 
 
+#<DoSpotDrilling> = 1
+    #<SpotDrillToolNumber> = 2 ; FIXME: 1/4" spotting drill
+    #<SpotDrillSpeed> = 3000
+    #<SpotDrillFeed> = 5
+
+
 
 
 ;
@@ -114,36 +120,44 @@
 ; .251 reamed
 #<PivotPinX> = 0.000
 #<PivotPinY> = -0.000
+#<PivotPinSpotZ> = -0.050  ; FIXME
 
 ; .251 reamed
 #<TakedownPinX> = 6.375
 #<TakedownPinY> = -0.000
+#<TakedownPinSpotZ> = -0.050 ; FIXME
 
 ; .376 reamed
 #<SafetySelectorX> = 5.572
 #<SafetySelectorY> = -0.464
+#<SafetySelectorSpotZ> = -0.050 ; FIXME
 
 ; 5/32 reamed (.156)
 #<TriggerHoleX> = 4.447
 #<TriggerHoleY> = -0.689
+#<TriggerHoleSpotZ> = -0.050 ; FIXME
 
 ; 5/32 reamed (.156)
 #<HammerHoleX> = 3.604
 #<HammerHoleY> = -0.375
+#<HammerHoleSpotZ> = -0.050 ; FIXME
 
 ; .125 drilled
 ; FIXME: the location of this hole differs in Ray's book vs the blueprint
 #<RearTriggerGuardHoleX> = 4.8765  ; Ray says 4.875
 #<RearTriggerGuardHoleY> = -2.180  ; Ray says 2.188
+#<RearTriggerGuardHoleSpotZ> = -0.050 ; FIXME
 
 ; #5 drilled (.2055)
 ; FIXME: the location of this hole differs in Ray's book vs the blueprint
 #<MagReleaseHoleX> = 3.084    ; Ray says 3.079
 #<MagReleaseHoleY> = -0.5625  ; Ray says -0.563
+#<MagReleaseHoleSpotZ> = -0.050 ; FIXME
 
 ; 5/32 drilled (.156, not a through hole!)
 #<BoltReleaseSpringHoleX> = 3.079
 #<BoltReleaseSpringHoleY> = -0.194
+#<BoltReleaseSpringHoleSpotZ> = -0.050 ; FIXME
 
 
 
@@ -239,6 +253,30 @@ o100 if [ #<DoSpotFaceBoltReleaseSpringHole> EQ 1 ] then
     o<helix-hole-2> call [#<BoltReleaseSpringHoleX>] [#<BoltReleaseSpringHoleY>] [#<BoltReleaseGrooveWidth>] [#<StartZ>] [0.050] [#<BottomZ>] [#<SafeZ>]
 
 o100 endif
+
+
+
+
+o200 if [ #<DoSpotDrilling> EQ 1 ] then
+
+    ; fetch the spot-drill
+    m6 t#<SpotDrillToolNumber> g43
+
+    m3 s#<SpotDrillSpeed>
+    f#<SpotDrillFeed>
+    (MSG, Set spindle speed to 3000 rpm)
+    m1
+
+    g81 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinSpotZ>              r#<SafeZ>
+    g81 x#<TakedownPinX>           y#<TakedownPinY>           z#<TakedownPinSpotZ>           r#<SafeZ>
+    g81 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorSpotZ>        r#<SafeZ>
+    g81 x#<TriggerHoleX>           y#<TriggerHoleY>           z#<TriggerHoleSpotZ>           r#<SafeZ>
+    g81 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleSpotZ>            r#<SafeZ>
+    g81 x#<RearTriggerGuardHoleX>  y#<RearTriggerGuardHoleY>  z#<RearTriggerGuardHoleSpotZ>  r#<SafeZ>
+    g81 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleSpotZ>        r#<SafeZ>
+    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleSpotZ> r#<SafeZ>
+
+o200 endif
 
 
 
