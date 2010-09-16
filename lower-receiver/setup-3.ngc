@@ -234,14 +234,6 @@ o100 if [ #<DoSpotFaceBoltReleaseSpringHole> EQ 1 ] then
     (MSG, Set spindle speed to 2500 rpm)
     m1
 
-; Arg 1: X coordinate of center of hole
-; Arg 2: Y coordinate of center of hole
-; Arg 3: diameter of hole
-; Arg 4: Z coordinate at top of workpiece (start cutting here)
-; Arg 5: Z increment (depth per revolution)
-; Arg 6: Z coordinate at bottom of hole
-; Arg 7: Retract Z level
-
     #<StartZ> = 0
     #<BottomZ> = -0.250
     o<helix-hole-2> call [#<BoltReleaseSpringHoleX>] [#<BoltReleaseSpringHoleY>] [#<BoltReleaseGrooveWidth>] [#<StartZ>] [0.050] [#<BottomZ>] [#<SafeZ>]
