@@ -98,6 +98,7 @@
 
 
 #<SafeZ> = 2
+#<ThroughZ> = -1.400
 
 #<DoSpotFaceBoltReleaseSpringHole> = 1
     #<SpotFaceBoltReleaseSpringHoleToolNumber> = 1 ; FIXME: 1/8" 2-flute center-cutting end-mill
@@ -111,6 +112,11 @@
     #<SpotDrillFeed> = 5
 
 
+#<Do.125Drilling> = 1
+    #<.125DrillToolNumber> = 3 ; FIXME: 1/8" drill
+    #<.125DrillSpeed> = 3000
+    #<.125DrillFeed> = [.125 * 100]  ; FIXME
+
 
 
 ;
@@ -120,44 +126,60 @@
 ; .251 reamed
 #<PivotPinX> = 0.000
 #<PivotPinY> = -0.000
-#<PivotPinSpotZ> = -0.050  ; FIXME
+#<PivotPinZTopOfWork> = 0.000  ; FIXME
+#<PivotPinSpotZ> = [#<PivotPinZTopOfWork> - 0.050]  ; FIXME
+#<PivotPinDrillZ> = #<ThroughZ> ; FIXME
 
 ; .251 reamed
 #<TakedownPinX> = 6.375
 #<TakedownPinY> = -0.000
-#<TakedownPinSpotZ> = -0.050 ; FIXME
+#<TakedownPinZTopOfWork> = 0.000 ; FIXME
+#<TakedownPinSpotZ> = [#<TakedownPinZTopOfWork> - 0.050] ; FIXME
+#<TakedownPinDrillZ> = #<ThroughZ> ; FIXME
 
 ; .376 reamed
 #<SafetySelectorX> = 5.572
 #<SafetySelectorY> = -0.464
-#<SafetySelectorSpotZ> = -0.050 ; FIXME
+#<SafetySelectorZTopOfWork> = 0.000 ; FIXME
+#<SafetySelectorSpotZ> = [#<SafetySelectorZTopOfWork> - 0.050] ; FIXME
+#<SafetySelectorDrillZ> = #<ThroughZ> ; FIXME
 
 ; 5/32 reamed (.156)
 #<TriggerHoleX> = 4.447
 #<TriggerHoleY> = -0.689
-#<TriggerHoleSpotZ> = -0.050 ; FIXME
+#<TriggerHoleZTopOfWork> = 0.000 ; FIXME
+#<TriggerHoleSpotZ> = [#<TriggerHoleZTopOfWork> - 0.050] ; FIXME
+#<TriggerHoleDrillZ> = #<ThroughZ> ; FIXME
 
 ; 5/32 reamed (.156)
 #<HammerHoleX> = 3.604
 #<HammerHoleY> = -0.375
-#<HammerHoleSpotZ> = -0.050 ; FIXME
+#<HammerHoleZTopOfWork> = 0.000 ; FIXME
+#<HammerHoleSpotZ> = [#<HammerHoleZTopOfWork> - 0.050] ; FIXME
+#<HammerHoleDrillZ> = #<ThroughZ> ; FIXME
 
 ; .125 drilled
 ; FIXME: the location of this hole differs in Ray's book vs the blueprint
 #<RearTriggerGuardHoleX> = 4.8765  ; Ray says 4.875
 #<RearTriggerGuardHoleY> = -2.180  ; Ray says 2.188
-#<RearTriggerGuardHoleSpotZ> = -0.050 ; FIXME
+#<RearTriggerGuardHoleZTopOfWork> = 0.000 ; FIXME
+#<RearTriggerGuardHoleSpotZ> = [#<RearTriggerGuardHoleZTopOfWork> - 0.050] ; FIXME
+#<RearTriggerGuardHoleDrillZ> = #<ThroughZ> ; FIXME
 
 ; #5 drilled (.2055)
 ; FIXME: the location of this hole differs in Ray's book vs the blueprint
 #<MagReleaseHoleX> = 3.084    ; Ray says 3.079
 #<MagReleaseHoleY> = -0.5625  ; Ray says -0.563
-#<MagReleaseHoleSpotZ> = -0.050 ; FIXME
+#<MagReleaseHoleZTopOfWork> = 0.000 ; FIXME
+#<MagReleaseHoleSpotZ> = [#<MagReleaseHoleZTopOfWork> - 0.050] ; FIXME
+#<MagReleaseHoleDrillZ> = #<ThroughZ> ; FIXME
 
 ; 5/32 drilled (.156, not a through hole!)
 #<BoltReleaseSpringHoleX> = 3.079
 #<BoltReleaseSpringHoleY> = -0.194
-#<BoltReleaseSpringHoleSpotZ> = -0.050 ; FIXME
+#<BoltReleaseSpringHoleZTopOfWork> = 0.000 ; FIXME
+#<BoltReleaseSpringHoleSpotZ> = [#<BoltReleaseSpringHoleZTopOfWork> - 0.050] ; FIXME
+#<BoltReleaseSpringHoleDrillZ> = #<ThroughZ> ; FIXME
 
 
 
@@ -275,6 +297,40 @@ o200 if [ #<DoSpotDrilling> EQ 1 ] then
     g81 x#<RearTriggerGuardHoleX>  y#<RearTriggerGuardHoleY>  z#<RearTriggerGuardHoleSpotZ>  r#<SafeZ>
     g81 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleSpotZ>        r#<SafeZ>
     g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleSpotZ> r#<SafeZ>
+
+o200 endif
+
+
+
+
+o300 if [ #<Do.125Drilling> EQ 1 ] then
+
+    ; fetch the .125 drill
+    m6 t#<.125DrillToolNumber> g43
+
+    m3 s#<.125DrillSpeed>
+    f#<.125DrillFeed>
+    (MSG, Set spindle speed to 3000 rpm)
+    m1
+
+    #<PeckDepth> = 0.050
+
+    g83 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinDrillZ>              r[#<PivotPinZTopOfWork> + 0.025]              q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<TakedownPinX>           y#<TakedownPinY>           z#<TakedownPinDrillZ>           r[#<TakedownPinZTopOfWork> + 0.025]           q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorDrillZ>        r[#<SafetySelectorZTopOfWork> + 0.025]        q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<TriggerHoleX>           y#<TriggerHoleY>           z#<TriggerHoleDrillZ>           r[#<TriggerHoleZTopOfWork> + 0.025]           q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleDrillZ>            r[#<HammerHoleZTopOfWork> + 0.025]            q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<RearTriggerGuardHoleX>  y#<RearTriggerGuardHoleY>  z#<RearTriggerGuardHoleDrillZ>  r[#<RearTriggerGuardHoleZTopOfWork> + 0.025]  q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleDrillZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]        q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025] q#<PeckDepth>
+    g0 z#<SafeZ>
 
 o200 endif
 
