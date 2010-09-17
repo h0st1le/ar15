@@ -124,6 +124,12 @@
     #<N24DrillFeed> = [.152 * 100]  ; FIXME
 
 
+#<Do.156Reaming> = 1
+    #<.156ReamerToolNumber> = 5 ; FIXME: .156 reamer
+    #<.156ReamerSpeed> = 400
+    #<.156ReamerFeed> = [.156 * 100]  ; FIXME
+
+
 
 
 ;
@@ -186,7 +192,7 @@
 #<BoltReleaseSpringHoleY> = -0.194
 #<BoltReleaseSpringHoleZTopOfWork> = 0.000 ; FIXME
 #<BoltReleaseSpringHoleSpotZ> = [#<BoltReleaseSpringHoleZTopOfWork> - 0.050] ; FIXME
-#<BoltReleaseSpringHoleDrillZ> = #<ThroughZ> ; FIXME
+#<BoltReleaseSpringHoleDrillZ> = [-0.700]  ; FIXME: Ray says "1/32 past the centerline"
 
 
 
@@ -377,6 +383,28 @@ o400 if [ #<DoN24Drilling> EQ 1 ] then
     g83 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleDrillZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]        q#<PeckDepth>
     g0 z#<SafeZ>
     g83 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025] q#<PeckDepth>
+    g0 z#<SafeZ>
+
+o400 endif
+
+
+
+
+o500 if [ #<Do.156Reaming> EQ 1 ] then
+
+    ; fetch the .156 reamer
+    m6 t#<.156ReamerToolNumber> g43
+
+    m3 s#<.156ReamerSpeed>
+    f#<.156ReamerFeed>
+    (MSG, Set spindle speed to FIXME rpm)
+    m1
+
+    g81 x#<TriggerHoleX>           y#<TriggerHoleY>           z#<TriggerHoleDrillZ>           r[#<TriggerHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleDrillZ>            r[#<HammerHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025]
     g0 z#<SafeZ>
 
 o400 endif
