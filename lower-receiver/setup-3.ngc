@@ -76,18 +76,18 @@
 ;
 ;         spot drill
 ;
+;         .125 drill
+;
+;         #24 drill (pre-drill for .156 (5/32) reamer)
+;         .156 (5/32) reamer
+;
+;         #5 drill (0.2055" diameter)
+;
 ;         D drill (pre-drill for 0.251 reamer)
 ;         .251 reamer
 ;
-;         FIXME: pre-drill for .376 reamer
+;         U drill (pre-drill for .376 reamer)
 ;         .376 reamer
-;
-;         FIXME: pre-drill for .156 (5/32) reamer
-;         .156 (5/32) reamer
-;
-;         .125 drill
-;
-;         #5 drill (0.2055" diameter)
 ;
 ;     end mills:
 ;
