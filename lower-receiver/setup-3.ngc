@@ -296,14 +296,22 @@ o200 if [ #<DoSpotDrilling> EQ 1 ] then
     (MSG, Set spindle speed to 3000 rpm)
     m1
 
-    g81 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinSpotZ>              r#<SafeZ>
-    g81 x#<TakedownPinX>           y#<TakedownPinY>           z#<TakedownPinSpotZ>           r#<SafeZ>
-    g81 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorSpotZ>        r#<SafeZ>
-    g81 x#<TriggerHoleX>           y#<TriggerHoleY>           z#<TriggerHoleSpotZ>           r#<SafeZ>
-    g81 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleSpotZ>            r#<SafeZ>
-    g81 x#<RearTriggerGuardHoleX>  y#<RearTriggerGuardHoleY>  z#<RearTriggerGuardHoleSpotZ>  r#<SafeZ>
-    g81 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleSpotZ>        r#<SafeZ>
-    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleSpotZ> r#<SafeZ>
+    g81 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinSpotZ>              r[#<PivotPinZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<TakedownPinX>           y#<TakedownPinY>           z#<TakedownPinSpotZ>           r[#<TakedownPinZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorSpotZ>        r[#<SafetySelectorZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<TriggerHoleX>           y#<TriggerHoleY>           z#<TriggerHoleSpotZ>           r[#<TriggerHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleSpotZ>            r[#<HammerHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<RearTriggerGuardHoleX>  y#<RearTriggerGuardHoleY>  z#<RearTriggerGuardHoleSpotZ>  r[#<RearTriggerGuardHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleSpotZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleSpotZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
 
 o200 endif
 
