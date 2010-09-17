@@ -78,7 +78,7 @@
 ;
 ;         .125 drill
 ;
-;         #24 drill (pre-drill for .156 (5/32) reamer)
+;         #24 drill (pre-drill for .156, 5/32, reamer)
 ;         .156 (5/32) reamer
 ;
 ;         #5 drill (0.2055" diameter)
@@ -116,6 +116,13 @@
     #<.125DrillToolNumber> = 3 ; FIXME: 1/8" drill
     #<.125DrillSpeed> = 3000
     #<.125DrillFeed> = [.125 * 100]  ; FIXME
+
+
+#<DoN24Drilling> = 1
+    #<N24DrillToolNumber> = 4 ; FIXME: #24 drill (.152)
+    #<N24DrillSpeed> = 3000
+    #<N24DrillFeed> = [.152 * 100]  ; FIXME
+
 
 
 
@@ -332,7 +339,39 @@ o300 if [ #<Do.125Drilling> EQ 1 ] then
     g83 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025] q#<PeckDepth>
     g0 z#<SafeZ>
 
-o200 endif
+o300 endif
+
+
+
+
+o400 if [ #<DoN24Drilling> EQ 1 ] then
+
+    ; fetch the #24 drill
+    m6 t#<N24DrillToolNumber> g43
+
+    m3 s#<N24DrillSpeed>
+    f#<N24DrillFeed>
+    (MSG, Set spindle speed to 3000 rpm)
+    m1
+
+    #<PeckDepth> = 0.050
+
+    g83 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinDrillZ>              r[#<PivotPinZTopOfWork> + 0.025]              q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<TakedownPinX>           y#<TakedownPinY>           z#<TakedownPinDrillZ>           r[#<TakedownPinZTopOfWork> + 0.025]           q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorDrillZ>        r[#<SafetySelectorZTopOfWork> + 0.025]        q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<TriggerHoleX>           y#<TriggerHoleY>           z#<TriggerHoleDrillZ>           r[#<TriggerHoleZTopOfWork> + 0.025]           q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleDrillZ>            r[#<HammerHoleZTopOfWork> + 0.025]            q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleDrillZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]        q#<PeckDepth>
+    g0 z#<SafeZ>
+    g83 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025] q#<PeckDepth>
+    g0 z#<SafeZ>
+
+o400 endif
 
 
 
