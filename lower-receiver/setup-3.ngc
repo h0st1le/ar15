@@ -570,11 +570,12 @@ o1100 if [ #<DoBoltReleaseSlot> EQ 1 ] then
     (MSG, Set spindle speed to 2500 rpm)
     m1
 
-    #<StartX> = #<BoltReleaseSlotLeftX>
+    ; ugh, manual cutter comp
+    #<StartX> = [#<BoltReleaseSlotLeftX> + #<BoltReleaseSlotCutterRadius>]
     #<StartY> = #<BoltReleaseSlotUpperY>
 
-    #<EndX> = #<BoltReleaseSlotRightX>
-    #<EndY> = #<BoltReleaseSlotKnobLowerY>
+    #<EndX> = [#<BoltReleaseSlotRightX>  - #<BoltReleaseSlotCutterRadius>]
+    #<EndY> = [#<BoltReleaseSlotKnobLowerY> + #<BoltReleaseSlotCutterRadius>]
 
     #<ZTop> = #<BoltReleaseSlotZKnobTop>
     #<ZBottom> = #<BoltReleaseSlotZSurfaceTop>
@@ -587,11 +588,11 @@ o1100 if [ #<DoBoltReleaseSlot> EQ 1 ] then
     o<rectangular-pocket-1> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<ZTop>] [#<ZBottom>] [#<ZTop> + 0.100] [#<HorizontalDepthOfCut>] [#<VerticalDepthOfCut>] [#<FinishAllowance>]
 
 
-    #<StartX> = #<BoltReleaseSlotLeftX>
+    #<StartX> = [#<BoltReleaseSlotLeftX> + #<BoltReleaseSlotCutterRadius>]
     #<StartY> = #<BoltReleaseSlotUpperY>
 
-    #<EndX> = #<BoltReleaseSlotRightX>
-    #<EndY> = #<BoltReleaseSlotLowerY>
+    #<EndX> = [#<BoltReleaseSlotRightX>  - #<BoltReleaseSlotCutterRadius>]
+    #<EndY> = [#<BoltReleaseSlotLowerY> + #<BoltReleaseSlotCutterRadius>]
 
     #<ZTop> = #<BoltReleaseSlotZSurfaceTop>
     #<ZBottom> = #<BoltReleaseSlotZBottom>
