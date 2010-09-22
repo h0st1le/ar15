@@ -162,6 +162,12 @@
     #<.376ReamerFeed> = [.368 * 100]  ; FIXME
 
 
+#<DoBoltReleaseSlot> = 1
+    #<BoltReleaseSlotToolNumber> = 11 ; FIXME: 1/8 end mill
+    #<BoltReleaseSlotSpeed> = 2500
+    #<BoltReleaseSlotFeed> = 5
+
+
 
 
 ;
@@ -230,21 +236,29 @@
 
 
 ;
-; the driver's side portion of the bolt release groove
-; milled with a 5/32 end mill, slotted out to 0.167 +- .010
+; the driver's side portion of the bolt release slot
+; milled with a 1/8 end mill, slotted out to 0.167 +- .010
 ; In the blueprint, Section C-C specifies the lower Y dimension as .630-.250=.380
 ; FIXME: The lower Y of this slot is different in Ray's book vs the blueprint
 ; FIXME: also the width of the slot
 ;
 
-#<BoltReleaseGrooveCutterDiameter> = [5 / 32]
-#<BoltReleaseGrooveCutterRadius> = [#<BoltReleaseGrooveCutterDiameter> / 2]
+#<BoltReleaseSlotCutterDiameter> = [1 / 8]
+#<BoltReleaseSlotCutterRadius> = [#<BoltReleaseSlotCutterDiameter> / 2]
 
-#<BoltReleaseGrooveWidth> = 0.167
-#<BoltReleaseGrooveLeftX> =  [ #<BoltReleaseSpringHoleX> - [ #<BoltReleaseGrooveWidth> / 2 ]]
-#<BoltReleaseGrooveRightX> = [ #<BoltReleaseSpringHoleX> + [ #<BoltReleaseGrooveWidth> / 2 ]]
-#<BoltReleaseGrooveLowerY> = -.380  ; FIXME: Ray says [-.279 - 5/64] = -.357125...
-#<BoltReleaseGrooveUpperY> = [ 0 + #<BoltReleaseGrooveCutterRadius> + 0.010 ]
+#<BoltReleaseSlotWidth> = 0.167
+
+#<BoltReleaseSlotXCenter> =  #<BoltReleaseSpringHoleX>
+#<BoltReleaseSlotLeftX> =  [ #<BoltReleaseSlotXCenter> - [ #<BoltReleaseSlotWidth> / 2 ]]
+#<BoltReleaseSlotRightX> = [ #<BoltReleaseSlotXCenter> + [ #<BoltReleaseSlotWidth> / 2 ]]
+
+#<BoltReleaseSlotKnobLowerY> = -.100  ; FIXME
+#<BoltReleaseSlotLowerY> = -.380  ; FIXME: Ray says [-.279 - 5/64] = -.357125...
+#<BoltReleaseSlotUpperY> = [ 0 + #<BoltReleaseSlotCutterRadius> + 0.010 ] ; move fully off the work
+
+#<BoltReleaseSlotZKnobTop> = 0.750    ; FIXME
+#<BoltReleaseSlotZSurfaceTop> = 0.500 ; FIXME
+#<BoltReleaseSlotZBottom> = 0.250     ; FIXME
 
 
 
@@ -317,7 +331,7 @@ o100 if [ #<DoSpotFaceBoltReleaseSpringHole> EQ 1 ] then
 
     #<StartZ> = 0
     #<BottomZ> = -0.250
-    o<helix-hole-2> call [#<BoltReleaseSpringHoleX>] [#<BoltReleaseSpringHoleY>] [#<BoltReleaseGrooveWidth>] [#<StartZ>] [0.050] [#<BottomZ>] [#<SafeZ>]
+    o<helix-hole-2> call [#<BoltReleaseSpringHoleX>] [#<BoltReleaseSpringHoleY>] [#<BoltReleaseSlotWidth>] [#<StartZ>] [0.050] [#<BottomZ>] [#<SafeZ>]
 
 o100 endif
 
@@ -542,6 +556,54 @@ o1000 if [ #<Do.376Reaming> EQ 1 ] then
     g0 z#<SafeZ>
 
 o1000 endif
+
+
+
+
+o1100 if [ #<DoBoltReleaseSlot> EQ 1 ] then
+
+    ; fetch the 1/8 end mill
+    m6 t#<BoltReleaseSlotToolNumber> g43
+
+    m3 s#<BoltReleaseSlotSpeed>
+    f#<BoltReleaseSlotFeed>
+    (MSG, Set spindle speed to 2500 rpm)
+    m1
+
+    #<StartX> = #<BoltReleaseSlotLeftX>
+    #<StartY> = #<BoltReleaseSlotUpperY>
+
+    #<EndX> = #<BoltReleaseSlotRightX>
+    #<EndY> = #<BoltReleaseSlotKnobLowerY>
+
+    #<ZTop> = #<BoltReleaseSlotZKnobTop>
+    #<ZBottom> = #<BoltReleaseSlotZSurfaceTop>
+
+    #<HorizontalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
+    #<VerticalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
+
+    #<FinishAllowance> = 0.010
+
+    o<rectangular-pocket-1> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<ZTop>] [#<ZBottom>] [#<ZTop> + 0.100] [#<HorizontalDepthOfCut>] [#<VerticalDepthOfCut>] [#<FinishAllowance>]
+
+
+    #<StartX> = #<BoltReleaseSlotLeftX>
+    #<StartY> = #<BoltReleaseSlotUpperY>
+
+    #<EndX> = #<BoltReleaseSlotRightX>
+    #<EndY> = #<BoltReleaseSlotLowerY>
+
+    #<ZTop> = #<BoltReleaseSlotZSurfaceTop>
+    #<ZBottom> = #<BoltReleaseSlotZBottom>
+
+    #<HorizontalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
+    #<VerticalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
+
+    #<FinishAllowance> = 0.010
+
+    o<rectangular-pocket-1> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<ZTop>] [#<ZBottom>] [#<BoltReleaseSlotZKnobTop> + 0.100] [#<HorizontalDepthOfCut>] [#<VerticalDepthOfCut>] [#<FinishAllowance>]
+
+o1100 endif
 
 
 
