@@ -174,6 +174,12 @@
     #<SafetyStopFeed> = 5
 
 
+#<DoMagReleaseSlot> = 1
+    #<MagReleaseSlotToolNumber> = 13 ; FIXME: 1/4 end mill
+    #<MagReleaseSlotSpeed> = 2500
+    #<MagReleaseSlotFeed> = 5
+
+
 
 
 ;
@@ -297,10 +303,15 @@
 #<MagReleaseSlotCutterDiameter> = [1 / 4]
 #<MagReleaseSlotCutterRadius> = [#<MagReleaseSlotCutterDiameter> / 2]
 
-#<MagReleaseSlotY> = -0.5625     ; FIXME: Ray calls this -0.563
+#<MagReleaseSlotY> = -0.5625         ; FIXME: Ray calls this -0.563
 
-#<MagReleaseSlotLeftX> = 1.943   ; FIXME: Ray calls this 1.938
-#<MagReleaseSlotRightX> = 3.202  ; FIXME: Ray calls this 3.197
+#<MagReleaseSlotLeftX> = 1.943       ; plunge here with a 1/4" cutter FIXME: Ray calls this 1.938
+#<MagReleaseSlotKnobRightX> = 2.375  ; FIXME
+#<MagReleaseSlotRightX> = 3.202      ; plunge here with a 1/4" cutter FIXME: Ray calls this 3.197
+
+#<MagReleaseSlotTopZ> = 0.750        ; FIXME
+#<MagReleaseSlotSurfaceZ> = 0.500    ; FIXME
+#<MagReleaseSlotBottomZ> = [#<MagReleaseSlotSurfaceZ> - [5/32]]
 
 
 
@@ -636,6 +647,56 @@ o1200 if [ #<DoSafetyStops> EQ 1 ] then
     g0 z#<SafeZ>
 
 o1200 endif
+
+
+
+
+o1300 if [ #<DoMagReleaseSlot> EQ 1 ] then
+
+    ; fetch the 1/4 end mill
+    m6 t#<MagReleaseSlotToolNumber> g43
+
+    m3 s#<MagReleaseSlotSpeed>
+    f#<MagReleaseSlotFeed>
+    (MSG, Set spindle speed to 2500 rpm)
+    m1
+
+    g0 x#<MagReleaseSlotKnobRightX> y#<MagReleaseSlotY>
+    g0 z#<SafeZ>
+
+    g1 z#<MagReleaseSlotTopZ>
+
+
+    ;
+    ; cut the slot in the knob in three passes
+    ;
+
+    #<KnobHeight> = [#<MagReleaseSlotTopZ> - #<MagReleaseSlotSurfaceZ>]
+
+    g1 z[#<MagReleaseSlotTopZ> - [[1/3] * #<KnobHeight>]]
+    g1 x#<MagReleaseSlotLeftX>
+
+    g1 z[#<MagReleaseSlotTopZ> - [[2/3] * #<KnobHeight>]]
+    g1 x#<MagReleaseSlotKnobRightX>
+
+    g1 z#<MagReleaseSlotSurfaceZ>
+    g1 x#<MagReleaseSlotLeftX>
+
+
+    ;
+    ; cut the slot the rest of the way down in two passes
+    ;
+
+    g1 z[[#<MagReleaseSlotSurfaceZ> + #<MagReleaseSlotBottomZ>] / 2]
+    g1 x#<MagReleaseSlotRightX>
+
+    g1 z#<MagReleaseSlotBottomZ>
+    g1 x#<MagReleaseSlotLeftX>
+
+
+    g0 z#<SafeZ>
+
+o1300 endif
 
 
 
