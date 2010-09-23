@@ -11,12 +11,36 @@
 ; The receiver forging is held in the vise, clamped on the deck and the
 ; trigger guard bosses, with the driver's side up.  The passenger side is
 ; up off the vise so we can drill and ream through-holes without nicking
-; the vise.  The surface of the driver's side that has the two safety stop
-; bumps is just above the level of the jaws, so we can mill all the way out
-; to the edge of the casting at that level.
+; the vise.  The surface of the driver's side that the two safety stop
+; bumps sprout from is at least 1/32 above the level of the jaws, so we can
+; mill the bolt release groove all the way out through the top side of the
+; casting at that level.
 ;
 ; The butt face is on the right (+X), at X=7.500, deck is on the +Y side at
 ; 0.250.
+;
+; The driver's side of the receiver, what's sticking up out of the vise,
+; and what we're going to work on for this setup, is not flat - is has many
+; different features sticking up.  We'll using the Z of six of these
+; features as references for machining:
+;
+;     1.  top of the bolt release bump
+;
+;     2.  bolt release bump base surface
+;
+;     3.  top of mag release bump
+;
+;     4.  mag release bump base surface
+;
+;     5.  safety bump base surface
+;
+;     6.  top of the pistol grip mount surface
+;
+; FIXME: Need all those Z measurements probed & available to this program.
+; Manual hand hacking for the fail.
+;
+; FIXME: Could use Z=0 at the center line of the casting, or Z=0 at the top
+; of the highest feature, which is better?
 ;
 ; The operations for this setup consist of 8 holes [spot-drilled, drilled,
 ; and some reamed] and 4 milling operations [slots & pockets].
