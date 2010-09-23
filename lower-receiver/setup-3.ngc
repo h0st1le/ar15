@@ -168,6 +168,12 @@
     #<BoltReleaseSlotFeed> = 5
 
 
+#<DoSafetyStops> = 1
+    #<SafetyStopToolNumber> = 12 ; FIXME: 1/4 end mill
+    #<SafetyStopSpeed> = 2500
+    #<SafetyStopFeed> = 5
+
+
 
 
 ;
@@ -277,6 +283,8 @@
 ; FIXME: can't find these dimensions anywhere...
 #<SafetyStopStartX> = [ 5.572 - 1 ]
 #<SafetyStopEndX> = [ 5.572 + 1 ]
+
+#<SafetyStopCutZ> = .500  ; FIXME
 
 
 
@@ -605,6 +613,29 @@ o1100 if [ #<DoBoltReleaseSlot> EQ 1 ] then
     o<rectangular-pocket-1> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<ZTop>] [#<ZBottom>] [#<BoltReleaseSlotZKnobTop> + 0.100] [#<HorizontalDepthOfCut>] [#<VerticalDepthOfCut>] [#<FinishAllowance>]
 
 o1100 endif
+
+
+
+
+o1200 if [ #<DoSafetyStops> EQ 1 ] then
+
+    ; fetch the 1/8 end mill
+    m6 t#<SafetyStopToolNumber> g43
+
+    m3 s#<SafetyStopSpeed>
+    f#<SafetyStopFeed>
+    (MSG, Set spindle speed to 2500 rpm)
+    m1
+
+    g0 x#<SafetyStopStartX> y#<SafetyStopY>
+    g0 z#<SafeZ>
+
+    g1 z#<SafetyStopCutZ>
+    g1 x#<SafetyStopEndX>
+
+    g0 z#<SafeZ>
+
+o1200 endif
 
 
 
