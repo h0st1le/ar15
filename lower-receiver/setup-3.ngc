@@ -180,6 +180,12 @@
     #<MagReleaseSlotFeed> = 5
 
 
+#<DoPistolGripPocket> = 1
+    #<PistolGripPocketToolNumber> = 14 ; FIXME: 1/2 end mill
+    #<PistolGripPocketSpeed> = 2000
+    #<PistolGripPocketFeed> = 5
+
+
 
 
 ;
@@ -322,11 +328,17 @@
 ; NOTE: the Z for this requires a measurement from the forging...
 ;
 
-#<PistolGripPocketCutterDiameter> = [1 / 4]
+#<PistolGripPocketCutterDiameter> = [1 / 2]
 #<PistolGripPocketCutterRadius> = [#<PistolGripPocketCutterDiameter> / 2]
 
 #<PistolGripPocketTopY> = -1.066
+#<PistolGripPocketBottomY> = -2.000
+
 #<PistolGripPocketLeftX> = 5.200  ; FIXME: Ray calls this 5.203
+#<PistolGripPocketRightX> = 7.000 ; FIXME
+
+#<PistolGripPocketTopZ> = .500    ; that's up from the centerline of the casting, FIXME: needs a measurement
+#<PistolGripPocketBottomZ> = [3/16]  ; that's up from the centerline of the casting
 
 
 
@@ -697,6 +709,37 @@ o1300 if [ #<DoMagReleaseSlot> EQ 1 ] then
     g0 z#<SafeZ>
 
 o1300 endif
+
+
+
+
+o1400 if [ #<DoPistolGripPocket> EQ 1 ] then
+
+    ; fetch the 1/2 end mill
+    m6 t#<PistolGripPocketToolNumber> g43
+
+    m3 s#<PistolGripPocketSpeed>
+    f#<PistolGripPocketFeed>
+    (MSG, Set spindle speed to 2000 rpm)
+    m1
+
+    #<StartX> = #<PistolGripPocketRightX>
+    #<StartY> = [#<PistolGripPocketTopY> - #<PistolGripPocketCutterRadius>]
+
+    #<EndX> = [#<PistolGripPocketLeftX> + #<PistolGripPocketCutterRadius>]
+    #<EndY> = #<PistolGripPocketBottomY>
+
+    #<ZTop> = #<PistolGripPocketTopZ>
+    #<ZBottom> = #<PistolGripPocketBottomZ>
+
+    #<HorizontalDepthOfCut> = #<PistolGripPocketCutterRadius>
+    #<VerticalDepthOfCut> = #<PistolGripPocketCutterRadius>
+
+    #<FinishAllowance> = 0.010
+
+    o<rectangular-pocket-1> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<ZTop>] [#<ZBottom>] [#<ZTop> + 0.100] [#<HorizontalDepthOfCut>] [#<VerticalDepthOfCut>] [#<FinishAllowance>]
+
+o1400 endif
 
 
 
