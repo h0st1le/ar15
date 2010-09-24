@@ -51,8 +51,10 @@
 ;
 ; The sequence of operations are thus:
 ;
-;     1.  spot-face for the bolt release hole [5/32 or smaller center
-;         cutting end mill]
+;     1.  spot-face for the bolt release spring hole by milling the
+;         beginning of the driver's side bolt release slot through the top
+;         of the bolt release bump [5/32 or smaller center cutting end
+;         mill]
 ;
 ;     2.  spot-drill all 8 holes [spot drill]
 ;
@@ -142,10 +144,10 @@
 
 
 
+; this operation uses the bolt release slot tool and speed and feed to mill
+; the top part of the bolt release slot through the bolt release bump, to
+; give the spot drill a place to start and clearance to reach it
 #<DoSpotFaceBoltReleaseSpringHole> = 1
-    #<SpotFaceBoltReleaseSpringHoleToolNumber> = 1
-    #<SpotFaceSpeed> = 2500
-    #<SpotFaceFeed> = 7
 
 
 #<DoSpotDrilling> = 1
@@ -287,7 +289,7 @@
 #<BoltReleaseSpringHoleX> = 3.079
 #<BoltReleaseSpringHoleY> = -0.194
 #<BoltReleaseSpringHoleZTopOfWork> = #<ZTopOfBoltReleaseBump>
-#<BoltReleaseSpringHoleSpotFaceZ> = [#<ZBoltReleaseBumpBaseSurface> - 0.010] ; Z to spot-face down to
+#<BoltReleaseSpringHoleSpotFaceZ> = [#<ZBoltReleaseBumpBaseSurface> - 0.005] ; Z to spot-face down to
 #<BoltReleaseSpringHoleSpotZ> = [#<BoltReleaseSpringHoleSpotFaceZ> - 0.030] ; Z to spot-drill down to
 #<BoltReleaseSpringHoleDrillZ> = [#<ZCenterOfCasting> - [1/32]]  ; FIXME: Ray says "1/32 past the centerline"
 
@@ -396,19 +398,45 @@ o<init-0> call
 
 o100 if [ #<DoSpotFaceBoltReleaseSpringHole> EQ 1 ] then
 
-    ; fetch the spot-facing end mill
-    m6 t#<SpotFaceBoltReleaseSpringHoleToolNumber> g43
+    ; fetch the 1/8 end mill
+    m6 t#<BoltReleaseSlotToolNumber> g43
 
-    g0 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY>
-
-    m3 s#<SpotFaceSpeed>
-    f#<SpotFaceFeed>
+    m3 s#<BoltReleaseSlotSpeed>
+    f#<BoltReleaseSlotFeed>
     (MSG, Set spindle speed to 2500 rpm)
     m1
 
-    #<StartZ> = #<BoltReleaseSpringHoleZTopOfWork>
-    #<BottomZ> = #<BoltReleaseSpringHoleSpotFaceZ>
-    o<helix-hole-2> call [#<BoltReleaseSpringHoleX>] [#<BoltReleaseSpringHoleY>] [#<BoltReleaseSlotWidth>] [#<StartZ>] [0.050] [#<BottomZ>] [#<SafeZ>]
+    #<FinishAllowance> = 0.010
+
+    ; ugh, manual cutter comp
+    #<StartX> = [#<BoltReleaseSlotLeftX> + #<BoltReleaseSlotCutterRadius> + #<FinishAllowance>]
+    #<StartY> = #<BoltReleaseSlotUpperY>
+
+    #<EndX> = [#<BoltReleaseSlotRightX>  - #<BoltReleaseSlotCutterRadius> - #<FinishAllowance>]
+    #<EndY> = [#<BoltReleaseSlotKnobLowerY> + #<BoltReleaseSlotCutterRadius>]
+
+    #<ZTop> = #<BoltReleaseSlotZKnobTop>
+    #<ZBottom> = #<BoltReleaseSlotZSurfaceTop>
+
+    #<HorizontalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
+    #<VerticalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
+
+    o<rectangular-pocket-1> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<ZTop>] [#<ZBottom>] [#<ZTop> + 0.100] [#<HorizontalDepthOfCut>] [#<VerticalDepthOfCut>] [0]
+
+
+    #<StartX> = [#<BoltReleaseSlotLeftX> + #<BoltReleaseSlotCutterRadius>]
+    #<StartY> = #<BoltReleaseSlotUpperY>
+
+    #<EndX> = [#<BoltReleaseSlotRightX>  - #<BoltReleaseSlotCutterRadius>]
+    #<EndY> = [#<BoltReleaseSlotLowerY> + #<BoltReleaseSlotCutterRadius>]
+
+    #<ZTop> = #<BoltReleaseSlotZSurfaceTop>
+    #<ZBottom> = #<BoltReleaseSpringHoleSpotFaceZ>
+
+    #<HorizontalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
+    #<VerticalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
+
+    o<rectangular-pocket-1> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<ZTop>] [#<ZBottom>] [#<BoltReleaseSlotZKnobTop> + 0.100] [#<HorizontalDepthOfCut>] [#<VerticalDepthOfCut>] [#<FinishAllowance>]
 
 o100 endif
 
@@ -439,8 +467,8 @@ o200 if [ #<DoSpotDrilling> EQ 1 ] then
     g0 z#<SafeZ>
     g81 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleSpotZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]
     g0 z#<SafeZ>
-    ;g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleSpotZ> r[#<BoltReleaseSpringHoleSpotFaceZ> + 0.025]
-    ;g0 z#<SafeZ>
+    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleSpotZ> r[#<BoltReleaseSpringHoleSpotFaceZ> + 0.025]
+    g0 z#<SafeZ>
 
 o200 endif
 
@@ -646,23 +674,6 @@ o1100 if [ #<DoBoltReleaseSlot> EQ 1 ] then
     f#<BoltReleaseSlotFeed>
     (MSG, Set spindle speed to 2500 rpm)
     m1
-
-    ; ugh, manual cutter comp
-    #<StartX> = [#<BoltReleaseSlotLeftX> + #<BoltReleaseSlotCutterRadius>]
-    #<StartY> = #<BoltReleaseSlotUpperY>
-
-    #<EndX> = [#<BoltReleaseSlotRightX>  - #<BoltReleaseSlotCutterRadius>]
-    #<EndY> = [#<BoltReleaseSlotKnobLowerY> + #<BoltReleaseSlotCutterRadius>]
-
-    #<ZTop> = #<BoltReleaseSlotZKnobTop>
-    #<ZBottom> = #<BoltReleaseSlotZSurfaceTop>
-
-    #<HorizontalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
-    #<VerticalDepthOfCut> = #<BoltReleaseSlotCutterRadius>
-
-    #<FinishAllowance> = 0.010
-
-    o<rectangular-pocket-1> call [#<StartX>] [#<StartY>] [#<EndX>] [#<EndY>] [#<ZTop>] [#<ZBottom>] [#<ZTop> + 0.100] [#<HorizontalDepthOfCut>] [#<VerticalDepthOfCut>] [#<FinishAllowance>]
 
 
     #<StartX> = [#<BoltReleaseSlotLeftX> + #<BoltReleaseSlotCutterRadius>]
