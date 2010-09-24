@@ -117,18 +117,20 @@
 
 
 ; Find these next measurements by using your CNC as a CMM, with a dial
-; indicator in the spindle.
+; indicator in the spindle.  Depress the probe 0.500 on the top of the bolt
+; release bump, then drive around and measure the other datums, and enter
+; the measurements here.
 ; The highest point defines Z=0.
 #<ZTopOfBoltReleaseBump>       = 0
-#<ZBoltReleaseBumpBaseSurface> = [1.248 - #<ZTotal>]
-#<ZTopOfMagReleaseBump>        = [1.399 - #<ZTotal>]
-#<ZMagReleaseBumpBaseSurface>  = [1.307 - #<ZTotal>]
-#<ZSafetyBumpBaseSurface>      = [1.307 - #<ZTotal>] ; FIXME
-#<ZPistolGripMountSurface>     = [1.307 - #<ZTotal>] ; FIXME
-
+#<ZBoltReleaseBumpBaseSurface> = [0.312 - 0.500]
+#<ZTopOfMagReleaseBump>        = [0.463 - 0.500]
+#<ZMagReleaseBumpBaseSurface>  = [0.374 - 0.500]
+#<ZSafetyBumpBaseSurface>      = [0.205 - 0.500]
+#<ZPistolGripMountSurface>     = [0.021 - 0.500]
 
 #<SafeZ> = 0.5
 #<ThroughZ> = -1.500
+
 
 
 
