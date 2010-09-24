@@ -36,12 +36,6 @@
 ;
 ;     6.  top of the pistol grip mount surface
 ;
-; FIXME: Need all those Z measurements probed & available to this program.
-; Manual hand hacking for the fail.
-;
-; FIXME: Could use Z=0 at the center line of the casting, or Z=0 at the top
-; of the highest feature, which is better?
-;
 ; The operations for this setup consist of 8 holes [spot-drilled, drilled,
 ; and some reamed] and 4 milling operations [slots & pockets].
 ;
@@ -122,8 +116,20 @@
 ;
 
 
-#<SafeZ> = 2
-#<ThroughZ> = -1.400
+; Find these next measurements by using your CNC as a CMM, with a dial
+; indicator in the spindle.
+; The highest point defines Z=0.
+#<ZTopOfBoltReleaseBump>       = 0
+#<ZBoltReleaseBumpBaseSurface> = [1.248 - #<ZTotal>]
+#<ZTopOfMagReleaseBump>        = [1.399 - #<ZTotal>]
+#<ZMagReleaseBumpBaseSurface>  = [1.307 - #<ZTotal>]
+#<ZSafetyBumpBaseSurface>      = [1.307 - #<ZTotal>] ; FIXME
+#<ZPistolGripMountSurface>     = [1.307 - #<ZTotal>] ; FIXME
+
+
+#<SafeZ> = 0.5
+#<ThroughZ> = -1.500
+
 
 
 #<DoSpotFaceBoltReleaseSpringHole> = 1
