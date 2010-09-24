@@ -127,6 +127,14 @@
 #<ZMagReleaseBumpBaseSurface>  = [0.374 - 0.500]
 #<ZSafetyBumpBaseSurface>      = [0.205 - 0.500]
 #<ZPistolGripMountSurface>     = [0.021 - 0.500]
+#<ZRearTriggerGuardSurface>    = [0.099 - 0.500]
+
+; one more measurement: the thickness of the casting across the safety bump
+; base surface and the matching surface on the other side
+#<CastingThickness> = 0.880
+
+#<ZCenterOfCasting> = [#<ZSafetyBumpBaseSurface> - [#<CastingThickness> / 2]]
+
 
 #<SafeZ> = 0.5
 #<ThroughZ> = -1.500
@@ -135,85 +143,85 @@
 
 
 #<DoSpotFaceBoltReleaseSpringHole> = 1
-    #<SpotFaceBoltReleaseSpringHoleToolNumber> = 1 ; FIXME: 1/8" 2-flute center-cutting end-mill
+    #<SpotFaceBoltReleaseSpringHoleToolNumber> = 1
     #<SpotFaceSpeed> = 2500
     #<SpotFaceFeed> = 7
 
 
 #<DoSpotDrilling> = 1
-    #<SpotDrillToolNumber> = 2 ; FIXME: 1/4" spotting drill
+    #<SpotDrillToolNumber> = 2
     #<SpotDrillSpeed> = 3000
     #<SpotDrillFeed> = 5
 
 
 #<Do.125Drilling> = 1
-    #<.125DrillToolNumber> = 3 ; FIXME: 1/8" drill
+    #<.125DrillToolNumber> = 3
     #<.125DrillSpeed> = 3000
-    #<.125DrillFeed> = [.125 * 100]  ; FIXME
+    #<.125DrillFeed> = [.125 * 50]  ; FIXME
 
 
 #<DoN24Drilling> = 1
-    #<N24DrillToolNumber> = 4 ; FIXME: #24 drill (.152)
+    #<N24DrillToolNumber> = 4
     #<N24DrillSpeed> = 3000
-    #<N24DrillFeed> = [.152 * 100]  ; FIXME
+    #<N24DrillFeed> = [.152 * 50]  ; FIXME
 
 
 #<Do.156Reaming> = 1
-    #<.156ReamerToolNumber> = 5 ; FIXME: .156 reamer
+    #<.156ReamerToolNumber> = 5
     #<.156ReamerSpeed> = 400
-    #<.156ReamerFeed> = [.156 * 100]  ; FIXME
+    #<.156ReamerFeed> = [.156 * 50]  ; FIXME
 
 
 #<DoN5Drilling> = 1
-    #<N5DrillToolNumber> = 6 ; FIXME: #5 drill (.2055)
+    #<N5DrillToolNumber> = 6
     #<N5DrillSpeed> = 3000
-    #<N5DrillFeed> = [.2055 * 100]  ; FIXME
+    #<N5DrillFeed> = [.2055 * 50]  ; FIXME
 
 
 #<DoDDrilling> = 1
-    #<DDrillToolNumber> = 7 ; FIXME: D drill (.246)
+    #<DDrillToolNumber> = 7
     #<DDrillSpeed> = 3000
-    #<DDrillFeed> = [.246 * 100]  ; FIXME
+    #<DDrillFeed> = [.246 * 50]  ; FIXME
 
 
 #<Do.251Reaming> = 1
-    #<.251ReamerToolNumber> = 8 ; FIXME: .251 reamer
+    #<.251ReamerToolNumber> = 8
     #<.251ReamerSpeed> = 400
-    #<.251ReamerFeed> = [.251 * 100]  ; FIXME
+    #<.251ReamerFeed> = [.251 * 50]  ; FIXME
 
 
 #<DoUDrilling> = 1
-    #<UDrillToolNumber> = 9 ; FIXME: U drill (.368)
+    #<UDrillToolNumber> = 9
     #<UDrillSpeed> = 3000
-    #<UDrillFeed> = [.368 * 100]  ; FIXME
+    #<UDrillFeed> = [.368 * 50]  ; FIXME
 
 
 #<Do.376Reaming> = 1
-    #<.376ReamerToolNumber> = 10 ; FIXME: .376 reamer
+    #<.376ReamerToolNumber> = 10
     #<.376ReamerSpeed> = 400
-    #<.376ReamerFeed> = [.368 * 100]  ; FIXME
+    #<.376ReamerFeed> = [.368 * 50]  ; FIXME
 
 
 #<DoBoltReleaseSlot> = 1
-    #<BoltReleaseSlotToolNumber> = 11 ; FIXME: 1/8 end mill
+    #<BoltReleaseSlotToolNumber> = 11
     #<BoltReleaseSlotSpeed> = 2500
     #<BoltReleaseSlotFeed> = 5
 
 
 #<DoSafetyStops> = 1
-    #<SafetyStopToolNumber> = 12 ; FIXME: 1/4 end mill
+    #<SafetyStopToolNumber> = 12
     #<SafetyStopSpeed> = 2500
     #<SafetyStopFeed> = 5
 
 
 #<DoMagReleaseSlot> = 1
-    #<MagReleaseSlotToolNumber> = 13 ; FIXME: 1/4 end mill
+    #<MagReleaseSlotToolNumber> = 13
     #<MagReleaseSlotSpeed> = 2500
     #<MagReleaseSlotFeed> = 5
 
 
 #<DoPistolGripPocket> = 1
-    #<PistolGripPocketToolNumber> = 14 ; FIXME: 1/2 end mill
+    #<PistolGripPocketToolNumber> = 14
     #<PistolGripPocketSpeed> = 2000
     #<PistolGripPocketFeed> = 5
 
@@ -227,60 +235,61 @@
 ; .251 reamed
 #<PivotPinX> = 0.000
 #<PivotPinY> = -0.000
-#<PivotPinZTopOfWork> = 0.000  ; FIXME
-#<PivotPinSpotZ> = [#<PivotPinZTopOfWork> - 0.050]  ; FIXME
-#<PivotPinDrillZ> = #<ThroughZ> ; FIXME
+#<PivotPinZTopOfWork> = #<ZBoltReleaseBumpBaseSurface>
+#<PivotPinSpotZ> = [#<PivotPinZTopOfWork> - 0.050]
+#<PivotPinDrillZ> = #<ThroughZ>
 
 ; .251 reamed
 #<TakedownPinX> = 6.375
 #<TakedownPinY> = -0.000
-#<TakedownPinZTopOfWork> = 0.000 ; FIXME
-#<TakedownPinSpotZ> = [#<TakedownPinZTopOfWork> - 0.050] ; FIXME
-#<TakedownPinDrillZ> = #<ThroughZ> ; FIXME
+#<TakedownPinZTopOfWork> = #<ZSafetyBumpBaseSurface>
+#<TakedownPinSpotZ> = [#<TakedownPinZTopOfWork> - 0.050]
+#<TakedownPinDrillZ> = #<ThroughZ>
 
 ; .376 reamed
 #<SafetySelectorX> = 5.572
 #<SafetySelectorY> = -0.464
-#<SafetySelectorZTopOfWork> = 0.000 ; FIXME
-#<SafetySelectorSpotZ> = [#<SafetySelectorZTopOfWork> - 0.050] ; FIXME
-#<SafetySelectorDrillZ> = #<ThroughZ> ; FIXME
+#<SafetySelectorZTopOfWork> = #<ZSafetyBumpBaseSurface>
+#<SafetySelectorSpotZ> = [#<SafetySelectorZTopOfWork> - 0.050]
+#<SafetySelectorDrillZ> = #<ThroughZ>
 
 ; 5/32 reamed (.156)
 #<TriggerHoleX> = 4.447
 #<TriggerHoleY> = -0.689
-#<TriggerHoleZTopOfWork> = 0.000 ; FIXME
-#<TriggerHoleSpotZ> = [#<TriggerHoleZTopOfWork> - 0.050] ; FIXME
-#<TriggerHoleDrillZ> = #<ThroughZ> ; FIXME
+#<TriggerHoleZTopOfWork> = #<ZSafetyBumpBaseSurface>
+#<TriggerHoleSpotZ> = [#<TriggerHoleZTopOfWork> - 0.050]
+#<TriggerHoleDrillZ> = #<ThroughZ>
 
 ; 5/32 reamed (.156)
 #<HammerHoleX> = 3.604
 #<HammerHoleY> = -0.375
-#<HammerHoleZTopOfWork> = 0.000 ; FIXME
-#<HammerHoleSpotZ> = [#<HammerHoleZTopOfWork> - 0.050] ; FIXME
-#<HammerHoleDrillZ> = #<ThroughZ> ; FIXME
+#<HammerHoleZTopOfWork> = #<ZSafetyBumpBaseSurface>
+#<HammerHoleSpotZ> = [#<HammerHoleZTopOfWork> - 0.050]
+#<HammerHoleDrillZ> = #<ThroughZ>
 
 ; .125 drilled
 ; FIXME: the location of this hole differs in Ray's book vs the blueprint
 #<RearTriggerGuardHoleX> = 4.8765  ; Ray says 4.875
 #<RearTriggerGuardHoleY> = -2.180  ; Ray says 2.188
-#<RearTriggerGuardHoleZTopOfWork> = 0.000 ; FIXME
-#<RearTriggerGuardHoleSpotZ> = [#<RearTriggerGuardHoleZTopOfWork> - 0.050] ; FIXME
-#<RearTriggerGuardHoleDrillZ> = #<ThroughZ> ; FIXME
+#<RearTriggerGuardHoleZTopOfWork> = #<ZRearTriggerGuardSurface>
+#<RearTriggerGuardHoleSpotZ> = [#<RearTriggerGuardHoleZTopOfWork> - 0.050]
+#<RearTriggerGuardHoleDrillZ> = #<ThroughZ>
 
 ; #5 drilled (.2055)
 ; FIXME: the location of this hole differs in Ray's book vs the blueprint
 #<MagReleaseHoleX> = 3.084    ; Ray says 3.079
 #<MagReleaseHoleY> = -0.5625  ; Ray says -0.563
-#<MagReleaseHoleZTopOfWork> = 0.000 ; FIXME
-#<MagReleaseHoleSpotZ> = [#<MagReleaseHoleZTopOfWork> - 0.050] ; FIXME
-#<MagReleaseHoleDrillZ> = #<ThroughZ> ; FIXME
+#<MagReleaseHoleZTopOfWork> = #<ZBoltReleaseBumpBaseSurface>
+#<MagReleaseHoleSpotZ> = [#<MagReleaseHoleZTopOfWork> - 0.050]
+#<MagReleaseHoleDrillZ> = #<ThroughZ>
 
 ; 5/32 drilled (.156, not a through hole!)
 #<BoltReleaseSpringHoleX> = 3.079
 #<BoltReleaseSpringHoleY> = -0.194
-#<BoltReleaseSpringHoleZTopOfWork> = 0.000 ; FIXME
-#<BoltReleaseSpringHoleSpotZ> = [#<BoltReleaseSpringHoleZTopOfWork> - 0.050] ; FIXME
-#<BoltReleaseSpringHoleDrillZ> = [-0.700]  ; FIXME: Ray says "1/32 past the centerline"
+#<BoltReleaseSpringHoleZTopOfWork> = #<ZTopOfBoltReleaseBump>
+#<BoltReleaseSpringHoleSpotFaceZ> = [#<ZBoltReleaseBumpBaseSurface> - 0.010] ; Z to spot-face down to
+#<BoltReleaseSpringHoleSpotZ> = [#<BoltReleaseSpringHoleSpotFaceZ> - 0.050] ; Z to spot-drill down to
+#<BoltReleaseSpringHoleDrillZ> = [#<ZCenterOfCasting> - [1/32]]  ; FIXME: Ray says "1/32 past the centerline"
 
 
 
@@ -302,13 +311,19 @@
 #<BoltReleaseSlotLeftX> =  [ #<BoltReleaseSlotXCenter> - [ #<BoltReleaseSlotWidth> / 2 ]]
 #<BoltReleaseSlotRightX> = [ #<BoltReleaseSlotXCenter> + [ #<BoltReleaseSlotWidth> / 2 ]]
 
-#<BoltReleaseSlotKnobLowerY> = -.100  ; FIXME
-#<BoltReleaseSlotLowerY> = -.380  ; FIXME: Ray says [-.279 - 5/64] = -.357125...
+#<BoltReleaseSlotKnobLowerY> = #<BoltReleaseSpringHoleY>
+
+; FIXME: the blueprint says .630 from the deck which is .380 from the Y
+; zero of this setup: the pivot hole.
+; But Ray says [-.279 - 5/64] = -.357125...
+;#<BoltReleaseSlotLowerY> = -.380
+#<BoltReleaseSlotLowerY> = -.358
+
 #<BoltReleaseSlotUpperY> = [ 0 + #<BoltReleaseSlotCutterRadius> + 0.010 ] ; move fully off the work
 
-#<BoltReleaseSlotZKnobTop> = 0.750    ; FIXME
-#<BoltReleaseSlotZSurfaceTop> = 0.500 ; FIXME
-#<BoltReleaseSlotZBottom> = 0.250     ; FIXME
+#<BoltReleaseSlotZKnobTop> = #<ZTopOfBoltReleaseBump>
+#<BoltReleaseSlotZSurfaceTop> = #<ZBoltReleaseBumpBaseSurface>
+#<BoltReleaseSlotZBottom> = #<ZSafetyBumpBaseSurface>
 
 
 
@@ -322,13 +337,13 @@
 #<SafetyStopCutterRadius> = [#<SafetyStopCutterDiameter> / 2]
 
 ; FIXME: can't find the source of SafetyStopY in the blueprint
-#<SafetyStopY> = [ -0.464 + [ 1/8 ]]
+; NOTE: this *requires* a 1/4" cutter
+#<SafetyStopY> = #<SafetySelectorY>
 
-; FIXME: can't find these dimensions anywhere...
-#<SafetyStopStartX> = [ 5.572 - 1 ]
-#<SafetyStopEndX> = [ 5.572 + 1 ]
+#<SafetyStopStartX> = [ #<SafetySelectorX> - [3/4] ]
+#<SafetyStopEndX> = [ #<SafetySelectorX> + [3/4] ]
 
-#<SafetyStopCutZ> = .500  ; FIXME
+#<SafetyStopCutZ> = [#<ZSafetyBumpBaseSurface> + 0.004]
 
 
 
@@ -344,11 +359,11 @@
 #<MagReleaseSlotY> = -0.5625         ; FIXME: Ray calls this -0.563
 
 #<MagReleaseSlotLeftX> = 1.943       ; plunge here with a 1/4" cutter FIXME: Ray calls this 1.938
-#<MagReleaseSlotKnobRightX> = 2.375  ; FIXME
+#<MagReleaseSlotKnobRightX> = 2.400
 #<MagReleaseSlotRightX> = 3.202      ; plunge here with a 1/4" cutter FIXME: Ray calls this 3.197
 
-#<MagReleaseSlotTopZ> = 0.750        ; FIXME
-#<MagReleaseSlotSurfaceZ> = 0.500    ; FIXME
+#<MagReleaseSlotTopZ> = #<ZTopOfMagReleaseBump>
+#<MagReleaseSlotSurfaceZ> = #<ZBoltReleaseBumpBaseSurface>
 #<MagReleaseSlotBottomZ> = [#<MagReleaseSlotSurfaceZ> - [5/32]]
 
 
@@ -357,7 +372,6 @@
 ;
 ; the pistol grip pocket
 ; NOTE: don't crash!
-; NOTE: the Z for this requires a measurement from the forging...
 ;
 
 #<PistolGripPocketCutterDiameter> = [1 / 2]
@@ -367,10 +381,10 @@
 #<PistolGripPocketBottomY> = -2.000
 
 #<PistolGripPocketLeftX> = 5.200  ; FIXME: Ray calls this 5.203
-#<PistolGripPocketRightX> = 7.000 ; FIXME
+#<PistolGripPocketRightX> = 7.000
 
-#<PistolGripPocketTopZ> = .500    ; that's up from the centerline of the casting, FIXME: needs a measurement
-#<PistolGripPocketBottomZ> = [3/16]  ; that's up from the centerline of the casting
+#<PistolGripPocketTopZ> = #<ZPistolGripMountSurface>
+#<PistolGripPocketBottomZ> = [#<ZCenterOfCasting> + [3/16]]
 
 
 
@@ -392,8 +406,8 @@ o100 if [ #<DoSpotFaceBoltReleaseSpringHole> EQ 1 ] then
     (MSG, Set spindle speed to 2500 rpm)
     m1
 
-    #<StartZ> = 0
-    #<BottomZ> = -0.250
+    #<StartZ> = #<BoltReleaseSpringHoleZTopOfWork>
+    #<BottomZ> = #<BoltReleaseSpringHoleSpotZ>
     o<helix-hole-2> call [#<BoltReleaseSpringHoleX>] [#<BoltReleaseSpringHoleY>] [#<BoltReleaseSlotWidth>] [#<StartZ>] [0.050] [#<BottomZ>] [#<SafeZ>]
 
 o100 endif
@@ -425,8 +439,8 @@ o200 if [ #<DoSpotDrilling> EQ 1 ] then
     g0 z#<SafeZ>
     g81 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleSpotZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]
     g0 z#<SafeZ>
-    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleSpotZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025]
-    g0 z#<SafeZ>
+    ;g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleSpotZ> r[#<BoltReleaseSpringHoleSpotFaceZ> + 0.025]
+    ;g0 z#<SafeZ>
 
 o200 endif
 
