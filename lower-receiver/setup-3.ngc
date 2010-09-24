@@ -407,7 +407,7 @@ o100 if [ #<DoSpotFaceBoltReleaseSpringHole> EQ 1 ] then
     m1
 
     #<StartZ> = #<BoltReleaseSpringHoleZTopOfWork>
-    #<BottomZ> = #<BoltReleaseSpringHoleSpotZ>
+    #<BottomZ> = #<BoltReleaseSpringHoleSpotFaceZ>
     o<helix-hole-2> call [#<BoltReleaseSpringHoleX>] [#<BoltReleaseSpringHoleY>] [#<BoltReleaseSlotWidth>] [#<StartZ>] [0.050] [#<BottomZ>] [#<SafeZ>]
 
 o100 endif
