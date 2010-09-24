@@ -473,7 +473,7 @@ o300 if [ #<Do.125Drilling> EQ 1 ] then
     g0 z#<SafeZ>
     g83 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleDrillZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]        q#<PeckDepth>
     g0 z#<SafeZ>
-    g83 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025] q#<PeckDepth>
+    g83 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleSpotFaceZ> + 0.025] q#<PeckDepth>
     g0 z#<SafeZ>
 
 o300 endif
@@ -505,7 +505,7 @@ o400 if [ #<DoN24Drilling> EQ 1 ] then
     g0 z#<SafeZ>
     g83 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleDrillZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]        q#<PeckDepth>
     g0 z#<SafeZ>
-    g83 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025] q#<PeckDepth>
+    g83 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleSpotFaceZ> + 0.025] q#<PeckDepth>
     g0 z#<SafeZ>
 
 o400 endif
@@ -527,7 +527,7 @@ o500 if [ #<Do.156Reaming> EQ 1 ] then
     g0 z#<SafeZ>
     g81 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleDrillZ>            r[#<HammerHoleZTopOfWork> + 0.025]
     g0 z#<SafeZ>
-    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleZTopOfWork> + 0.025]
+    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleSpotFaceZ> + 0.025]
     g0 z#<SafeZ>
 
 o500 endif
