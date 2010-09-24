@@ -236,35 +236,35 @@
 #<PivotPinX> = 0.000
 #<PivotPinY> = -0.000
 #<PivotPinZTopOfWork> = #<ZBoltReleaseBumpBaseSurface>
-#<PivotPinSpotZ> = [#<PivotPinZTopOfWork> - 0.050]
+#<PivotPinSpotZ> = [#<PivotPinZTopOfWork> - 0.030]
 #<PivotPinDrillZ> = #<ThroughZ>
 
 ; .251 reamed
 #<TakedownPinX> = 6.375
 #<TakedownPinY> = -0.000
 #<TakedownPinZTopOfWork> = #<ZSafetyBumpBaseSurface>
-#<TakedownPinSpotZ> = [#<TakedownPinZTopOfWork> - 0.050]
+#<TakedownPinSpotZ> = [#<TakedownPinZTopOfWork> - 0.030]
 #<TakedownPinDrillZ> = #<ThroughZ>
 
 ; .376 reamed
 #<SafetySelectorX> = 5.572
 #<SafetySelectorY> = -0.464
 #<SafetySelectorZTopOfWork> = #<ZSafetyBumpBaseSurface>
-#<SafetySelectorSpotZ> = [#<SafetySelectorZTopOfWork> - 0.050]
+#<SafetySelectorSpotZ> = [#<SafetySelectorZTopOfWork> - 0.030]
 #<SafetySelectorDrillZ> = #<ThroughZ>
 
 ; 5/32 reamed (.156)
 #<TriggerHoleX> = 4.447
 #<TriggerHoleY> = -0.689
 #<TriggerHoleZTopOfWork> = #<ZSafetyBumpBaseSurface>
-#<TriggerHoleSpotZ> = [#<TriggerHoleZTopOfWork> - 0.050]
+#<TriggerHoleSpotZ> = [#<TriggerHoleZTopOfWork> - 0.030]
 #<TriggerHoleDrillZ> = #<ThroughZ>
 
 ; 5/32 reamed (.156)
 #<HammerHoleX> = 3.604
 #<HammerHoleY> = -0.375
 #<HammerHoleZTopOfWork> = #<ZSafetyBumpBaseSurface>
-#<HammerHoleSpotZ> = [#<HammerHoleZTopOfWork> - 0.050]
+#<HammerHoleSpotZ> = [#<HammerHoleZTopOfWork> - 0.030]
 #<HammerHoleDrillZ> = #<ThroughZ>
 
 ; .125 drilled
@@ -272,7 +272,7 @@
 #<RearTriggerGuardHoleX> = 4.8765  ; Ray says 4.875
 #<RearTriggerGuardHoleY> = -2.180  ; Ray says 2.188
 #<RearTriggerGuardHoleZTopOfWork> = #<ZRearTriggerGuardSurface>
-#<RearTriggerGuardHoleSpotZ> = [#<RearTriggerGuardHoleZTopOfWork> - 0.050]
+#<RearTriggerGuardHoleSpotZ> = [#<RearTriggerGuardHoleZTopOfWork> - 0.030]
 #<RearTriggerGuardHoleDrillZ> = #<ThroughZ>
 
 ; #5 drilled (.2055)
@@ -280,7 +280,7 @@
 #<MagReleaseHoleX> = 3.084    ; Ray says 3.079
 #<MagReleaseHoleY> = -0.5625  ; Ray says -0.563
 #<MagReleaseHoleZTopOfWork> = #<ZBoltReleaseBumpBaseSurface>
-#<MagReleaseHoleSpotZ> = [#<MagReleaseHoleZTopOfWork> - 0.050]
+#<MagReleaseHoleSpotZ> = [#<MagReleaseHoleZTopOfWork> - 0.030]
 #<MagReleaseHoleDrillZ> = #<ThroughZ>
 
 ; 5/32 drilled (.156, not a through hole!)
@@ -288,7 +288,7 @@
 #<BoltReleaseSpringHoleY> = -0.194
 #<BoltReleaseSpringHoleZTopOfWork> = #<ZTopOfBoltReleaseBump>
 #<BoltReleaseSpringHoleSpotFaceZ> = [#<ZBoltReleaseBumpBaseSurface> - 0.010] ; Z to spot-face down to
-#<BoltReleaseSpringHoleSpotZ> = [#<BoltReleaseSpringHoleSpotFaceZ> - 0.050] ; Z to spot-drill down to
+#<BoltReleaseSpringHoleSpotZ> = [#<BoltReleaseSpringHoleSpotFaceZ> - 0.030] ; Z to spot-drill down to
 #<BoltReleaseSpringHoleDrillZ> = [#<ZCenterOfCasting> - [1/32]]  ; FIXME: Ray says "1/32 past the centerline"
 
 
