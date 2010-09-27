@@ -47,7 +47,9 @@
 ; The rest of the ops are independent of each other, so they can happen in
 ; any convenient order.  The holes should be made from smallest to biggest,
 ; so we can open up the bigger holes gradually with bigger and bigger
-; drills.
+; drills.  All the reaming should happen after all the drilling, so there
+; are fewer speed changes [to help out folks with manual speed changers,
+; like me].
 ;
 ; The sequence of operations are thus:
 ;
@@ -56,31 +58,30 @@
 ;         of the bolt release bump [5/32 or smaller center cutting end
 ;         mill]
 ;
+;
 ;     2.  spot-drill all 8 holes [spot drill]
 ;
-;     3.  drill all 8 holes .125 [finishes: rear trigger guard hole] [1/8
-;         drill]
+;     3.  drill all 8 holes .125 [1/8 drill]
 ;
-;     4.  drill all 7 remaining holes with a #24 drill, .152, pre-drill for
+;     4.  drill the 7 remaining holes with a #24 drill, .152, pre-drill for
 ;         .156 reamer [#24 drill]
 ;
-;     5.  ream trigger hole, hammer hole, and bolt release spring hole to
-;         5/32 [finishes: trigger hole, hammer hole, bolt release spring
-;         hole] [5/32 reamer]
+;     5.  drill the 4 remaining holes with a #5 drill [#5 drill]
 ;
-;     6.  drill all 4 remaining holes with a #5 drill [finishes: mag
-;         release hole] [#5 drill]
+;     6.  drill the 3 remaining holes with a D drill [D drill]
 ;
-;     7.  drill all 3 remaining holes with a D drill [D drill]
-;
-;     8.  ream pivot pin hole and hammer pin hole with a .251 reamer
-;         [finishes pivot pin hole and hammer pin hole] [.251 reamer]
-;
-;     9.  drill safety selector hole with a U drill, .368, pre-drill for
+;     7.  drill safety selector hole with a U drill, .368, pre-drill for
 ;         .376 reamer [U drill]
 ;
-;     10. ream safety selector hole to .376 [finishes: safety selector
-;         hole] [.376 reamer]
+;
+;     8.  ream trigger hole, hammer hole, and bolt release spring hole to
+;         5/32 [5/32 reamer]
+;
+;     9.  ream pivot pin hole and hammer pin hole with a .251 reamer [.251
+;         reamer]
+;
+;     10. ream safety selector hole to .376 [.376 reamer]
+;
 ;
 ;     11. mill bolt release slot [5/32 or 1/8 end mill]
 ;
@@ -168,12 +169,6 @@
     #<N24DrillFeed> = [.152 * 50]  ; FIXME
 
 
-#<Do.156Reaming> = 1
-    #<.156ReamerToolNumber> = 5
-    #<.156ReamerSpeed> = 400
-    #<.156ReamerFeed> = [.156 * 50]  ; FIXME
-
-
 #<DoN5Drilling> = 1
     #<N5DrillToolNumber> = 6
     #<N5DrillSpeed> = 3000
@@ -186,16 +181,22 @@
     #<DDrillFeed> = [.246 * 50]  ; FIXME
 
 
-#<Do.251Reaming> = 1
-    #<.251ReamerToolNumber> = 8
-    #<.251ReamerSpeed> = 400
-    #<.251ReamerFeed> = [.251 * 50]  ; FIXME
-
-
 #<DoUDrilling> = 1
     #<UDrillToolNumber> = 9
     #<UDrillSpeed> = 3000
     #<UDrillFeed> = [.368 * 50]  ; FIXME
+
+
+#<Do.156Reaming> = 1
+    #<.156ReamerToolNumber> = 5
+    #<.156ReamerSpeed> = 400
+    #<.156ReamerFeed> = [.156 * 50]  ; FIXME
+
+
+#<Do.251Reaming> = 1
+    #<.251ReamerToolNumber> = 8
+    #<.251ReamerSpeed> = 400
+    #<.251ReamerFeed> = [.251 * 50]  ; FIXME
 
 
 #<Do.376Reaming> = 1
@@ -541,29 +542,7 @@ o400 endif
 
 
 
-o500 if [ #<Do.156Reaming> EQ 1 ] then
-
-    ; fetch the .156 reamer
-    m6 t#<.156ReamerToolNumber> g43
-
-    m3 s#<.156ReamerSpeed>
-    f#<.156ReamerFeed>
-    (MSG, Set spindle speed to FIXME rpm)
-    m1
-
-    g81 x#<TriggerHoleX>           y#<TriggerHoleY>           z#<TriggerHoleDrillZ>           r[#<TriggerHoleZTopOfWork> + 0.025]
-    g0 z#<SafeZ>
-    g81 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleDrillZ>            r[#<HammerHoleZTopOfWork> + 0.025]
-    g0 z#<SafeZ>
-    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleSpotFaceZ> + 0.025]
-    g0 z#<SafeZ>
-
-o500 endif
-
-
-
-
-o600 if [ #<DoN5Drilling> EQ 1 ] then
+o500 if [ #<DoN5Drilling> EQ 1 ] then
 
     ; fetch the #5 drill
     m6 t#<N5DrillToolNumber> g43
@@ -582,12 +561,12 @@ o600 if [ #<DoN5Drilling> EQ 1 ] then
     g83 x#<MagReleaseHoleX>        y#<MagReleaseHoleY>        z#<MagReleaseHoleDrillZ>        r[#<MagReleaseHoleZTopOfWork> + 0.025]        q#<PeckDepth>
     g0 z#<SafeZ>
 
-o600 endif
+o500 endif
 
 
 
 
-o700 if [ #<DoDDrilling> EQ 1 ] then
+o600 if [ #<DoDDrilling> EQ 1 ] then
 
     ; fetch the D drill
     m6 t#<DDrillToolNumber> g43
@@ -604,12 +583,52 @@ o700 if [ #<DoDDrilling> EQ 1 ] then
     g83 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorDrillZ>        r[#<SafetySelectorZTopOfWork> + 0.025]        q#<PeckDepth>
     g0 z#<SafeZ>
 
+o600 endif
+
+
+
+
+o700 if [ #<DoUDrilling> EQ 1 ] then
+
+    ; fetch the U drill
+    m6 t#<UDrillToolNumber> g43
+
+    m3 s#<UDrillSpeed>
+    f#<UDrillFeed>
+    (MSG, Set spindle speed to FIXME rpm)
+    m1
+
+    g83 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorDrillZ>        r[#<SafetySelectorZTopOfWork> + 0.025]        q#<PeckDepth>
+    g0 z#<SafeZ>
+
 o700 endif
 
 
 
 
-o800 if [ #<Do.251Reaming> EQ 1 ] then
+o800 if [ #<Do.156Reaming> EQ 1 ] then
+
+    ; fetch the .156 reamer
+    m6 t#<.156ReamerToolNumber> g43
+
+    m3 s#<.156ReamerSpeed>
+    f#<.156ReamerFeed>
+    (MSG, Set spindle speed to FIXME rpm)
+    m1
+
+    g81 x#<TriggerHoleX>           y#<TriggerHoleY>           z#<TriggerHoleDrillZ>           r[#<TriggerHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<HammerHoleX>            y#<HammerHoleY>            z#<HammerHoleDrillZ>            r[#<HammerHoleZTopOfWork> + 0.025]
+    g0 z#<SafeZ>
+    g81 x#<BoltReleaseSpringHoleX> y#<BoltReleaseSpringHoleY> z#<BoltReleaseSpringHoleDrillZ> r[#<BoltReleaseSpringHoleSpotFaceZ> + 0.025]
+    g0 z#<SafeZ>
+
+o800 endif
+
+
+
+
+o900 if [ #<Do.251Reaming> EQ 1 ] then
 
     ; fetch the .251 reamer
     m6 t#<.251ReamerToolNumber> g43
@@ -622,24 +641,6 @@ o800 if [ #<Do.251Reaming> EQ 1 ] then
     g81 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinDrillZ>              r[#<PivotPinZTopOfWork> + 0.025]
     g0 z#<SafeZ>
     g81 x#<TakedownPinX>           y#<TakedownPinY>           z#<TakedownPinDrillZ>           r[#<TakedownPinZTopOfWork> + 0.025]
-    g0 z#<SafeZ>
-
-o800 endif
-
-
-
-
-o900 if [ #<DoUDrilling> EQ 1 ] then
-
-    ; fetch the U drill
-    m6 t#<UDrillToolNumber> g43
-
-    m3 s#<UDrillSpeed>
-    f#<UDrillFeed>
-    (MSG, Set spindle speed to FIXME rpm)
-    m1
-
-    g83 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorDrillZ>        r[#<SafetySelectorZTopOfWork> + 0.025]        q#<PeckDepth>
     g0 z#<SafeZ>
 
 o900 endif
