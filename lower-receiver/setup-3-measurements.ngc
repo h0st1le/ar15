@@ -1,0 +1,121 @@
+
+;
+; This program does part of the milling of an AR-15 lower receiver.
+;
+; It is based on chapter 3 of "Machining the AR15 Lower Receiver Forging"
+; by Ray Brandes (available from from Ray-Vin.com), and on the drawing
+; titled "AR15 LOWER RECEIVER", drawn by D. Snider, released 2000 July 27.
+;
+; This program uses a plunger-style dial indicator mounted in the spindle
+; to make measurements of the Z levels of 6 features on the driver's side
+; of the forging:
+;
+;     1.  top of the bolt release bump
+;
+;     2.  bolt release bump base surface
+;
+;     3.  top of mag release bump
+;
+;     4.  mag release bump base surface
+;
+;     5.  safety bump base surface
+;
+;     6.  top of the pistol grip mount surface
+;
+; The work holding is identical to what's described in setup-3.ngc.
+;
+; The work offsets will be different:
+; 
+;     If your plunger is not concentric with the spindle you'll need
+;     different X and Y work offsets, so that when the machine is at X0 Y0,
+;     the plunger is over the center of the pivot pin hole.
+;
+;     Set the Z offset by positioning the plunger over the bolt release
+;     knob and lowering the spindle until the dial indicator reads .500.
+;     Set Z=-0.500 at this level.
+;
+; Run this program and use the information it produces to set the six Z
+; levels at the top of the setup-3.ngc program.
+;
+
+
+#<ZSafe> = 0.100
+#<ZjrobeLevel> = -0.500
+
+
+o<init-0> call
+f5
+
+
+g0 x3.079 y0.250
+g0 z#<ZSafe>
+g1 z#<ZProbeLevel>
+g1 y0.600
+g1 y0.200
+g1 y0.600
+g1 y0.200
+(MSG, dial indicator shows ZBoltReleaseBumpBaseSurface)
+m1
+g0 z#<ZSafe>
+
+
+g0 x2.000 y-0.563
+g1 z#<ZProbeLevel>
+g1 x2.100
+g1 x2.000
+g1 x2.100
+g1 x2.000
+(MSG, dial indicator shows ZTopOfMagReleaseBump)
+m1
+g0 z#<ZSafe>
+
+
+g0 x2.700 y-0.563
+g1 z#<ZProbeLevel>
+g1 x3.300
+g1 x2.700
+g1 x3.300
+g1 x2.700
+(MSG, dial indicator shows ZMagReleaseBumpBaseSurface)
+m1
+g0 z#<ZSafe>
+
+
+g0 x3.750 y-0.600
+g1 z#<ZProbeLevel>
+g1 x5.500
+g1 x3.750
+(MSG, dial indicator shows ZSafetyBumpBaseSurface)
+m1
+g0 z#<ZSafe>
+
+
+g0 x5.500 y-1.300
+g1 z#<ZProbeLevel>
+g1 x6.250
+g1 x5.500 y-2.050
+g1 y-1.300
+(MSG, dial indicator shows ZPistolGripMountSurface>)
+m1
+g0 z#<ZSafe>
+
+
+g0 x4.875 y-2.180
+g1 z#<ZProbeLevel>
+g1 x5.000
+g1 x4.800
+g1 x4.875
+(MSG, dial indicator shows ZRearTriggerGuardSurface>)
+m1
+g0 z#<ZSafe>
+
+
+
+
+;
+; done!
+;
+
+o<presentation-position-0> call
+m2
+
