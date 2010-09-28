@@ -19,10 +19,11 @@
 ; The butt face is on the right (+X), at X=7.500, deck is on the +Y side at
 ; 0.250.
 ;
-; The driver's side of the receiver, what's sticking up out of the vise,
+; The driver's side of the receiver, what's sticking up out of the vise
 ; and what we're going to work on for this setup, is not flat - is has many
-; different features sticking up.  We'll using the Z of six of these
-; features as references for machining:
+; different features sticking up.  The Z levels of six of these features
+; are important for this program.  Use the setup-3-measurements.ngc program
+; to measure the Z levels of these features and enter them below:
 ;
 ;     1.  top of the bolt release bump
 ;
@@ -122,8 +123,9 @@
 ; Find these next measurements by using your CNC as a CMM, with a dial
 ; indicator in the spindle.  Depress the probe 0.500 on the top of the bolt
 ; release bump, then drive around and measure the other datums, and enter
-; the measurements here.
-; The highest point defines Z=0.
+; the measurements here.  Or let the setup-3-measurements.ngc program do
+; the driving and you just enter numbers.
+; The highest point is the top of the bolt release bump, this defines Z=0.
 #<ZTopOfBoltReleaseBump>       = 0
 #<ZBoltReleaseBumpBaseSurface> = [0.312 - 0.500]
 #<ZTopOfMagReleaseBump>        = [0.463 - 0.500]
