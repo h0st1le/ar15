@@ -808,6 +808,6 @@ o1400 endif
 ; done!
 ;
 
-;o<presentation-position-0> call
+o<presentation-position-0> call
 m2
 
