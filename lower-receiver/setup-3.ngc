@@ -324,7 +324,7 @@
 ;#<BoltReleaseSlotLowerY> = -.380
 #<BoltReleaseSlotLowerY> = -.358
 
-#<BoltReleaseSlotUpperY> = [ 0 + #<BoltReleaseSlotCutterRadius> + 0.010 ] ; move fully off the work
+#<BoltReleaseSlotUpperY> = [ 0.250 + #<BoltReleaseSlotCutterRadius> + 0.010 ] ; move fully off the work
 
 #<BoltReleaseSlotZKnobTop> = #<ZTopOfBoltReleaseBump>
 #<BoltReleaseSlotZSurfaceTop> = #<ZBoltReleaseBumpBaseSurface>
@@ -430,7 +430,7 @@ o100 if [ #<DoSpotFaceBoltReleaseSpringHole> EQ 1 ] then
     #<StartX> = [#<BoltReleaseSlotLeftX> + #<BoltReleaseSlotCutterRadius>]
     #<StartY> = #<BoltReleaseSlotUpperY>
 
-    #<EndX> = [#<BoltReleaseSlotRightX>  - #<BoltReleaseSlotCutterRadius>]
+    #<EndX> = [#<BoltReleaseSlotRightX> - #<BoltReleaseSlotCutterRadius>]
     #<EndY> = [#<BoltReleaseSlotLowerY> + #<BoltReleaseSlotCutterRadius>]
 
     #<ZTop> = #<BoltReleaseSlotZSurfaceTop>
