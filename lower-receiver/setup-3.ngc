@@ -154,57 +154,57 @@
 
 
 #<DoSpotDrilling> = 1
-    #<SpotDrillToolNumber> = 2
+    #<SpotDrillToolNumber> = 17 ; spot drill
     #<SpotDrillSpeed> = 3000
     #<SpotDrillFeed> = 5
 
 
 #<Do.125Drilling> = 1
-    #<.125DrillToolNumber> = 3
+    #<.125DrillToolNumber> = 18 ; 1/8 drill
     #<.125DrillSpeed> = 3000
-    #<.125DrillFeed> = [.125 * 50]  ; FIXME
+    #<.125DrillFeed> = [.125 * 50]
 
 
 #<DoN24Drilling> = 1
-    #<N24DrillToolNumber> = 4
+    #<N24DrillToolNumber> = 19 ; number-24 drill
     #<N24DrillSpeed> = 3000
-    #<N24DrillFeed> = [.152 * 50]  ; FIXME
+    #<N24DrillFeed> = [.152 * 50]
 
 
 #<DoN5Drilling> = 1
-    #<N5DrillToolNumber> = 6
+    #<N5DrillToolNumber> = 21 ; number-5 drill
     #<N5DrillSpeed> = 3000
-    #<N5DrillFeed> = [.2055 * 50]  ; FIXME
+    #<N5DrillFeed> = [.2055 * 50]
 
 
 #<DoDDrilling> = 1
-    #<DDrillToolNumber> = 7
+    #<DDrillToolNumber> = 22 ; letter-D drill
     #<DDrillSpeed> = 3000
-    #<DDrillFeed> = [.246 * 50]  ; FIXME
+    #<DDrillFeed> = [.246 * 50]
 
 
 #<DoUDrilling> = 1
-    #<UDrillToolNumber> = 9
+    #<UDrillToolNumber> = 24 ; letter-U drill
     #<UDrillSpeed> = 3000
-    #<UDrillFeed> = [.368 * 50]  ; FIXME
+    #<UDrillFeed> = [.368 * 50]
 
 
 #<Do.156Reaming> = 1
-    #<.156ReamerToolNumber> = 5
+    #<.156ReamerToolNumber> = 20 ; 5/32 reamer
     #<.156ReamerSpeed> = 400
-    #<.156ReamerFeed> = [.156 * 50]  ; FIXME
+    #<.156ReamerFeed> = [.156 * 50]
 
 
 #<Do.251Reaming> = 1
-    #<.251ReamerToolNumber> = 8
+    #<.251ReamerToolNumber> = 23 ; .251 reamer
     #<.251ReamerSpeed> = 400
-    #<.251ReamerFeed> = [.251 * 50]  ; FIXME
+    #<.251ReamerFeed> = [.251 * 50]
 
 
 #<Do.376Reaming> = 1
-    #<.376ReamerToolNumber> = 10
+    #<.376ReamerToolNumber> = 25 ; .376 reamer
     #<.376ReamerSpeed> = 400
-    #<.376ReamerFeed> = [.368 * 50]  ; FIXME
+    #<.376ReamerFeed> = [.368 * 50]
 
 
 #<DoBoltReleaseSlot> = 1
