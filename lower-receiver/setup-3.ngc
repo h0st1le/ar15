@@ -345,8 +345,8 @@
 ; NOTE: this *requires* a 1/4" cutter
 #<SafetyStopY> = #<SafetySelectorY>
 
-#<SafetyStopStartX> = [ #<SafetySelectorX> - [3/4] ]
-#<SafetyStopEndX> = [ #<SafetySelectorX> + [3/4] ]
+#<SafetyStopStartX> = [ #<SafetySelectorX> - 1 ]
+#<SafetyStopEndX> = [ #<SafetySelectorX> + 1 ]
 
 #<SafetyStopCutZ> = [#<ZSafetyBumpBaseSurface> + 0.004]
 
