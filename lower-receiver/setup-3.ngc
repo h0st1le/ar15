@@ -383,10 +383,10 @@
 #<PistolGripPocketCutterRadius> = [#<PistolGripPocketCutterDiameter> / 2]
 
 #<PistolGripPocketTopY> = -1.066
-#<PistolGripPocketBottomY> = -2.000
+#<PistolGripPocketBottomY> = -2.500
 
 #<PistolGripPocketLeftX> = 5.200  ; FIXME: Ray calls this 5.203
-#<PistolGripPocketRightX> = 7.000
+#<PistolGripPocketRightX> = 6.750
 
 #<PistolGripPocketTopZ> = #<ZPistolGripMountSurface>
 #<PistolGripPocketBottomZ> = [#<ZCenterOfCasting> + [3/16]]
