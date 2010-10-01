@@ -208,25 +208,25 @@
 
 
 #<DoBoltReleaseSlot> = 1
-    #<BoltReleaseSlotToolNumber> = 11
+    #<BoltReleaseSlotToolNumber> = 16 ; 1/8 end mill, 2 flute
     #<BoltReleaseSlotSpeed> = 2500
     #<BoltReleaseSlotFeed> = 5
 
 
 #<DoSafetyStops> = 1
-    #<SafetyStopToolNumber> = 12
+    #<SafetyStopToolNumber> = 26 ; 1/4 end mill, 2 flute
     #<SafetyStopSpeed> = 2500
     #<SafetyStopFeed> = 5
 
 
 #<DoMagReleaseSlot> = 1
-    #<MagReleaseSlotToolNumber> = 13
+    #<MagReleaseSlotToolNumber> = 26 ; 1/4 end mill, same as for safety stops
     #<MagReleaseSlotSpeed> = 2500
     #<MagReleaseSlotFeed> = 5
 
 
 #<DoPistolGripPocket> = 1
-    #<PistolGripPocketToolNumber> = 14
+    #<PistolGripPocketToolNumber> = 5 ; 1/2 end mill, 2 flutes
     #<PistolGripPocketSpeed> = 2000
     #<PistolGripPocketFeed> = 5
 
@@ -702,7 +702,7 @@ o1100 endif
 
 o1200 if [ #<DoSafetyStops> EQ 1 ] then
 
-    ; fetch the 1/8 end mill
+    ; fetch the 1/4 end mill
     m6 t#<SafetyStopToolNumber> g43
 
     m3 s#<SafetyStopSpeed>
