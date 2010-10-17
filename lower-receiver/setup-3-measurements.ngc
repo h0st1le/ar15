@@ -32,7 +32,7 @@
 ;
 ;     Set the Z offset by positioning the plunger over the bolt release
 ;     knob and lowering the spindle until the dial indicator reads .500.
-;     Set Z=-0.500 at this level.
+;     Set Z=-0.500 at this level.  Jog the spindle up off the knob.
 ;
 ; Run this program and use the information it produces to set the six Z
 ; levels at the top of the setup-3.ngc program.
@@ -40,25 +40,30 @@
 
 
 #<ZSafe> = 0.100
-#<ZjrobeLevel> = -0.500
+#<ZProbeLevel> = -0.500
 
 
 o<init-0> call
 f5
 
 
-g0 x3.079 y0.250
+;
+; ZBoltReleaseBumpBaseSurface
+;
+
 g0 z#<ZSafe>
+g0 x3.079 y-0.250
 g1 z#<ZProbeLevel>
-g1 y0.600
-g1 y0.200
-g1 y0.600
-g1 y0.200
+g1 y-0.600
+g1 y-0.250
+g1 y-0.600
+g1 y-0.250
 (MSG, dial indicator shows ZBoltReleaseBumpBaseSurface)
 m1
 g0 z#<ZSafe>
 
 
+; FIXME: drive around the hole
 g0 x2.000 y-0.563
 g1 z#<ZProbeLevel>
 g1 x2.100
@@ -70,12 +75,12 @@ m1
 g0 z#<ZSafe>
 
 
-g0 x2.700 y-0.563
+g0 x2.100 y-1.100
 g1 z#<ZProbeLevel>
-g1 x3.300
-g1 x2.700
-g1 x3.300
-g1 x2.700
+g1 y-1.100
+g1 y-1.600
+g1 y-1.100
+g1 y-1.600
 (MSG, dial indicator shows ZMagReleaseBumpBaseSurface)
 m1
 g0 z#<ZSafe>
@@ -90,11 +95,11 @@ m1
 g0 z#<ZSafe>
 
 
-g0 x5.500 y-1.300
+g0 x5.500 y-1.350
 g1 z#<ZProbeLevel>
 g1 x6.250
-g1 x5.500 y-2.050
-g1 y-1.300
+g1 x5.500 y-1.800
+g1 y-1.350
 (MSG, dial indicator shows ZPistolGripMountSurface>)
 m1
 g0 z#<ZSafe>
