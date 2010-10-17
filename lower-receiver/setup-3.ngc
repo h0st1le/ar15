@@ -127,16 +127,17 @@
 ; the driving and you just enter numbers.
 ; The highest point is the top of the bolt release bump, this defines Z=0.
 #<ZTopOfBoltReleaseBump>       = 0
-#<ZBoltReleaseBumpBaseSurface> = [0.312 - 0.500]
-#<ZTopOfMagReleaseBump>        = [0.463 - 0.500]
-#<ZMagReleaseBumpBaseSurface>  = [0.374 - 0.500]
-#<ZSafetyBumpBaseSurface>      = [0.205 - 0.500]
-#<ZPistolGripMountSurface>     = [0.021 - 0.500]
-#<ZRearTriggerGuardSurface>    = [0.099 - 0.500]
+#<ZBoltReleaseBumpBaseSurface> = [0.312 - 0.500]  ; 0.312, 0.312
+#<ZTopOfMagReleaseBump>        = [0.460 - 0.500]  ; 0.460, 0.463
+#<ZMagReleaseBumpBaseSurface>  = [0.371 - 0.500]  ; 0.371, 0.374
+#<ZSafetyBumpBaseSurface>      = [0.202 - 0.500]  ; 0.202, 0.205
+#<ZPistolGripMountSurface>     = [0.009 - 0.500]  ; 0.009, 0.021
+#<ZRearTriggerGuardSurface>    = [0.093 - 0.500]  ; 0.093, 0.099
 
 ; one more measurement: the thickness of the casting across the safety bump
 ; base surface and the matching surface on the other side
-#<CastingThickness> = 0.880
+; I've taken this measurement on two castings and seen 0.878 and 0.880
+#<CastingThickness> = 0.878
 
 #<ZCenterOfCasting> = [#<ZSafetyBumpBaseSurface> - [#<CastingThickness> / 2]]
 
