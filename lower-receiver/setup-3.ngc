@@ -141,7 +141,7 @@
 #<ZCenterOfCasting> = [#<ZSafetyBumpBaseSurface> - [#<CastingThickness> / 2]]
 
 
-#<SafeZ> = 0.5
+#<SafeZ> = 0.1
 #<ThroughZ> = -1.500
 
 
