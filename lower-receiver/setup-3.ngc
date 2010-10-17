@@ -292,7 +292,7 @@
 #<BoltReleaseSpringHoleX> = 3.079
 #<BoltReleaseSpringHoleY> = -0.194
 #<BoltReleaseSpringHoleZTopOfWork> = #<ZTopOfBoltReleaseBump>
-#<BoltReleaseSpringHoleSpotFaceZ> = [#<ZBoltReleaseBumpBaseSurface> - 0.005] ; Z to spot-face down to
+#<BoltReleaseSpringHoleSpotFaceZ> = [#<ZBoltReleaseBumpBaseSurface> - 0.010] ; Z to spot-face down to
 #<BoltReleaseSpringHoleSpotZ> = [#<BoltReleaseSpringHoleSpotFaceZ> - 0.030] ; Z to spot-drill down to
 #<BoltReleaseSpringHoleDrillZ> = [#<ZCenterOfCasting> - [1/32]]  ; FIXME: Ray says "1/32 past the centerline"
 
