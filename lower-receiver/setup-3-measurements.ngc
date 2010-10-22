@@ -30,6 +30,9 @@
 ;     different X and Y work offsets, so that when the machine is at X0 Y0,
 ;     the plunger is over the center of the pivot pin hole.
 ;
+;     A good way to do this is to put the plunger in the little dimple on
+;     the mag release bump, and set X=2.109, Y=-0.563 there.
+;
 ;     Set the Z offset by positioning the plunger over the bolt release
 ;     knob and lowering the spindle until the dial indicator reads .500.
 ;     Set Z=-0.500 at this level.  Jog the spindle up off the knob.
