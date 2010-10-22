@@ -66,13 +66,10 @@ m1
 g0 z#<ZSafe>
 
 
-; FIXME: drive around the hole
 g0 x2.000 y-0.563
 g1 z#<ZProbeLevel>
-g1 x2.100
-g1 x2.000
-g1 x2.100
-g1 x2.000
+g90.1
+g2 i2.109 j-0.563
 (MSG, dial indicator shows ZTopOfMagReleaseBump)
 m1
 g0 z#<ZSafe>
