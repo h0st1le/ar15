@@ -157,38 +157,50 @@
 
 #<DoSpotDrilling> = 1
     #<SpotDrillToolNumber> = 17 ; spot drill
-    #<SpotDrillSpeed> = 3000
+    #<SpotDrillSpeed> = 3500
     #<SpotDrillFeed> = 5
 
 
 #<Do.125Drilling> = 1
+    ; drilling in Al with HSS, sfm=200-300
+    ; speed = [sfm*4/D] = [200*4/.125] = 6400, oops, call it 3500
+    ; feed/rev = [D * 0.016] = [.125*.016] = .002
+    ; feed = [D*.016*RPM] = .002 * 3500 = 7
     #<.125DrillToolNumber> = 18 ; 1/8 drill
-    #<.125DrillSpeed> = 3000
-    #<.125DrillFeed> = [.125 * 50]
+    #<.125DrillSpeed> = 3500
+    #<.125DrillFeed> = 7
 
 
 #<DoN24Drilling> = 1
+    ; speed = 800/.152 = 5263, call it 3500
+    ; feed = .152 * .016 * 3500 = 8.5
     #<N24DrillToolNumber> = 19 ; number-24 drill
-    #<N24DrillSpeed> = 3000
-    #<N24DrillFeed> = [.152 * 50]
+    #<N24DrillSpeed> = 3500
+    #<N24DrillFeed> = 8.5
 
 
 #<DoN5Drilling> = 1
+    ; speed = [SFM*4/D] = [800/.2055] = 3892, oops, call it 3500
+    ; feed = [D*.016*RPM] = .2055*.016*3500 = 11.5
     #<N5DrillToolNumber> = 21 ; number-5 drill
-    #<N5DrillSpeed> = 3000
-    #<N5DrillFeed> = [.2055 * 50]
+    #<N5DrillSpeed> = 3500
+    #<N5DrillFeed> = 11.5
 
 
 #<DoDDrilling> = 1
+    ; speed = [SFM*4/D] = [200*4/.246] = 3252
+    ; feed = [D*.016*RPM] = .246*.016*3252 = 12.8
     #<DDrillToolNumber> = 22 ; letter-D drill
-    #<DDrillSpeed> = 3000
-    #<DDrillFeed> = [.246 * 50]
+    #<DDrillSpeed> = 3250
+    #<DDrillFeed> = 12.8
 
 
 #<DoUDrilling> = 1
+    ; speed = [SFM*4/D] = 800/.368 = 2173
+    ; feed = [D*.016*RPM] = .368*.016*2173 = 12.8
     #<UDrillToolNumber> = 24 ; letter-U drill
-    #<UDrillSpeed> = 3000
-    #<UDrillFeed> = [.368 * 50]
+    #<UDrillSpeed> = 2173
+    #<UDrillFeed> = 12.8
 
 
 #<Do.156Reaming> = 1
@@ -455,7 +467,7 @@ o200 if [ #<DoSpotDrilling> EQ 1 ] then
 
     m3 s#<SpotDrillSpeed>
     f#<SpotDrillFeed>
-    (MSG, Set spindle speed to 3000 rpm)
+    (MSG, Set spindle speed to 3500 rpm)
     m1
 
     g81 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinSpotZ>              r[#<PivotPinZTopOfWork> + 0.025]
@@ -487,7 +499,7 @@ o300 if [ #<Do.125Drilling> EQ 1 ] then
 
     m3 s#<.125DrillSpeed>
     f#<.125DrillFeed>
-    (MSG, Set spindle speed to 3000 rpm)
+    (MSG, Set spindle speed to 3500 rpm)
     m1
 
     #<PeckDepth> = 0.050
@@ -521,7 +533,7 @@ o400 if [ #<DoN24Drilling> EQ 1 ] then
 
     m3 s#<N24DrillSpeed>
     f#<N24DrillFeed>
-    (MSG, Set spindle speed to 3000 rpm)
+    (MSG, Set spindle speed to 3500 rpm)
     m1
 
     #<PeckDepth> = 0.050
@@ -553,7 +565,7 @@ o500 if [ #<DoN5Drilling> EQ 1 ] then
 
     m3 s#<N5DrillSpeed>
     f#<N5DrillFeed>
-    (MSG, Set spindle speed to FIXME rpm)
+    (MSG, Set spindle speed to 3500 rpm)
     m1
 
     g83 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinDrillZ>              r[#<PivotPinZTopOfWork> + 0.025]              q#<PeckDepth>
@@ -577,7 +589,7 @@ o600 if [ #<DoDDrilling> EQ 1 ] then
 
     m3 s#<DDrillSpeed>
     f#<DDrillFeed>
-    (MSG, Set spindle speed to FIXME rpm)
+    (MSG, Set spindle speed to 3250 rpm)
     m1
 
     g83 x#<PivotPinX>              y#<PivotPinY>              z#<PivotPinDrillZ>              r[#<PivotPinZTopOfWork> + 0.025]              q#<PeckDepth>
@@ -599,7 +611,7 @@ o700 if [ #<DoUDrilling> EQ 1 ] then
 
     m3 s#<UDrillSpeed>
     f#<UDrillFeed>
-    (MSG, Set spindle speed to FIXME rpm)
+    (MSG, Set spindle speed to 2173 rpm)
     m1
 
     g83 x#<SafetySelectorX>        y#<SafetySelectorY>        z#<SafetySelectorDrillZ>        r[#<SafetySelectorZTopOfWork> + 0.025]        q#<PeckDepth>
