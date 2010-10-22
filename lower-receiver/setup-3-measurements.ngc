@@ -88,7 +88,7 @@ g0 z#<ZSafe>
 
 g0 x3.750 y-0.600
 g1 z#<ZProbeLevel>
-g1 x5.500
+g1 x6.250
 g1 x3.750
 (MSG, dial indicator shows ZSafetyBumpBaseSurface)
 m1
